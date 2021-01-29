@@ -86,6 +86,11 @@ int x::barray::length()
 	return t;
 }
 
+int x::barray::get_status()
+{
+	return status;
+}
+
 unsigned char& x::barray::operator[](const int& num)
 {
 	return ba[num];
@@ -211,3 +216,4 @@ x::barray x::operator*=(const int& multiple, x::barray& right_barray)
 		right_barray.ba[i] = a.ba[i%a.t];
 	return right_barray;
 }
+
