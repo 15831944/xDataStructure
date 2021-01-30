@@ -48,20 +48,18 @@ x::barray::~barray()
 	status = code::INIT;
 }
 
-bool x::barray::set_length(int array_length)
+bool x::barray::set_length(const int& array_length, unsigned char value)
 {
 	if (array_length < 0)
 		return false;
 	if (t == array_length)
-	{
 		return true;
-	}
 	else if (t == 0)
 	{
 		t = array_length;
 		ba = new unsigned char[t];
 		for (int i = 0; i < t; ++i)
-			ba[i] = 0;
+			ba[i] = value;
 		status = code::NORMAL;
 		return true;
 	}
@@ -77,7 +75,7 @@ bool x::barray::set_length(int array_length)
 	t = array_length;
 	ba = new unsigned char[t];
 	for (int i = 0; i < t; ++i)
-		ba[i] = 0;
+		ba[i] = value;
 	status = code::NORMAL;
 	return true;
 }
@@ -152,7 +150,7 @@ x::barray x::barray::operator+(const x::barray& right_barray)
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < t + a.t; ++i)
+	for (i; i < a.t; ++i)
 		a.ba[i] = right_barray.ba[i - t];
 	a.status = code::NORMAL;
 	return a;
@@ -164,7 +162,15 @@ x::barray& x::barray::operator+=(const x::barray& right_barray)
 		return *this = right_barray;
 	if (right_barray.t == 0)
 		return *this;
-	*this = *this + right_barray;
+	barray a = *this;
+	t = a.t + right_barray.t;
+	delete[]ba;
+	ba = new unsigned char[t];
+	int i;
+	for (i = 0; i < a.t; ++i)
+		ba[i] = a.ba[i];
+	for (i; i < t; ++i)
+		ba[i] = right_barray.ba[i - a.t];
 	return *this;
 }
 

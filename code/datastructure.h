@@ -6,9 +6,6 @@
 
 namespace x
 {
-
-	// ---------- 以下尚未经过测试 ---------- //
-
 	// barry 二进制数组，unsigned char数组
 	class barray
 	{
@@ -21,9 +18,11 @@ namespace x
 		barray(const int& array_length, unsigned char value = 0);  // 预设长度，默认设置为value的值
 		barray(const barray& origin_barray);  
 		~barray();
-		bool set_length(int array_length);  // 设置长度
+
+		bool set_length(const int& array_length, unsigned char value = 0);  // 设置长度,默认设置为value的值
 		int get_length();  // 获取长度
 		int get_status();  // 获取状态代码
+
 
 		// ----- 以下重载运算符 ----- //
 		unsigned char& operator[](const int& num);  
@@ -32,6 +31,7 @@ namespace x
 		bool operator!=(const barray& right_barray);
 		barray operator+(const barray& right_barray);
 		barray& operator+=(const barray& right_barray);
+		// ---------- 以下尚未经过测试 ---------- //
 		barray operator*(const int& multiple);
 		barray& operator*=(const int& multiple);
 		friend barray operator*(const int& multiple, const barray& right_barray);
