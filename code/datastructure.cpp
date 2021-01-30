@@ -7,7 +7,7 @@ x::barray::barray()
 	status = code::INIT;
 }
 
-x::barray::barray(int array_length)
+x::barray::barray(const int& array_length,unsigned char value)
 {
 	if (array_length <= 0)
 	{
@@ -19,7 +19,7 @@ x::barray::barray(int array_length)
 	t = array_length;
 	ba = new unsigned char[t];
 	for (int i = 0; i < t; ++i)
-		ba[i] = 0;
+		ba[i] = value;
 	status = code::NORMAL;
 }
 
@@ -30,14 +30,13 @@ x::barray::barray(const barray& origin_barray)
 		t = 0;
 		ba = 0x00;
 		status = code::INIT;
+		return;
 	}
 	t = origin_barray.t;
 	ba = new unsigned char[t];
 	status = code::NORMAL;
 	for (int i = 0; i < t; ++i)
-	{
 		ba[i] = origin_barray.ba[i];
-	}
 }
 
 x::barray::~barray()
@@ -45,6 +44,8 @@ x::barray::~barray()
 	if (t > 0)
 		delete[]ba;
 	ba = 0x00;
+	t = 0;
+	status = code::INIT;
 }
 
 bool x::barray::set_length(int array_length)
@@ -81,7 +82,7 @@ bool x::barray::set_length(int array_length)
 	return true;
 }
 
-int x::barray::length()
+int x::barray::get_length()
 {
 	return t;
 }
