@@ -37,21 +37,68 @@ namespace x
 		// ----- 结束重载运算符 ----- //
 	};
 
+	// ********** 以下的未经过测试 ********** //
+	// node 节点 有两个指针
 	template<class T>
 	class node
 	{
 	private :
-		T d;
+		T data;
 		node* ln, rn;
 	public:
 		node();
-		node(const T& data);
+		node(const T& data, const node* const left_node = 0x00, const node* const right_node = 0x00);
 		~node();
+
 		node* get_left();
 		node* get_right();
 		T get_data();
 	};
 
+	// ---------- 开始 node 实现 ---------- //
+	template<class T>
+	node<T>::node()
+	{
+		ln = 0x00;
+		rn = 0x00;
+	}
+
+	template<class T>
+	node<T>::node(const T& data, const node* const left_node, const node* const right_node)
+	{
+		d = data;
+		ln = left_node;
+		rn = right_node;
+	}
+
+	template<class T>
+	node<T>::~node()
+	{
+		ln = 0x00;
+		rn = 0x00;
+	}
+
+	template<class T>
+	node<T>* node<T>::get_left()
+	{
+		return ln;
+	}
+
+	template<class T>
+	node<T>* node<T>::get_right()
+	{
+		return rn;
+	}
+
+	template<class T>
+	T node<T>::get_data()
+	{
+		return data;
+	}
+
+	// ---------- 结束 node 实现 ---------- //
+
+	// snode 节点 只有一个指针
 	template<class T>
 	class snode
 	{
@@ -60,11 +107,46 @@ namespace x
 		snode<T>* rn;
 	public:
 		snode();
-		snode(const T& data);
+		snode(const T& data, const snode* const next_snode = 0x00);
 		~snode();
-		snode* next();
+		snode* get_next();
 		T get_data();
 	};
+
+	// ---------- 开始 snode 实现 ---------- //
+
+	template<class T>
+	snode<T>::snode()
+	{
+		rn = 0x00;
+	}
+
+	template<class T>
+	snode<T>::snode(const T& data, const snode* const next_snode)
+	{
+		d = data;
+		rn = next_snode;
+	}
+
+	template<class T>
+	snode<T>::~snode()
+	{
+		rn = 0x00;
+	}
+
+	template<class T>
+	snode<T>* snode<T>::get_next()
+	{
+		return rn;
+	}
+
+	template<class T>
+	T snode<T>::get_data()
+	{
+		return d;
+	}
+
+	// ---------- 结束 snode 实现 ---------- //
 
 	template<class T>
 	class stack

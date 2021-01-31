@@ -213,3 +213,5 @@ x::barray x::operator*(const int& multiple, const x::barray& right_barray)
 }
 
 
+
+
