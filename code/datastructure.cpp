@@ -192,7 +192,7 @@ x::barray& x::barray::operator*=(const int& multiple)
 	if (t == 0)
 		return *this;
 	barray a = *this;
-	t = multiple * t;
+	t = multiple * a.t;
 	ba = new unsigned char[t];
 	for (int i = 0; i < t; ++i)
 		ba[i] = a.ba[i%a.t];
@@ -212,15 +212,4 @@ x::barray x::operator*(const int& multiple, const x::barray& right_barray)
 	return a;
 }
 
-x::barray x::operator*=(const int& multiple, x::barray& right_barray)
-{
-	if (right_barray.t == 0)
-		return right_barray;
-	barray a = right_barray;
-	right_barray.t = multiple * right_barray.t;
-	right_barray.ba = new unsigned char[right_barray.t];
-	for (int i = 0; i < right_barray.t; ++i)
-		right_barray.ba[i] = a.ba[i%a.t];
-	return right_barray;
-}
 

@@ -31,11 +31,9 @@ namespace x
 		bool operator!=(const barray& right_barray);
 		barray operator+(const barray& right_barray);
 		barray& operator+=(const barray& right_barray);
-		// ---------- 以下尚未经过测试 ---------- //
 		barray operator*(const int& multiple);
 		barray& operator*=(const int& multiple);
 		friend barray operator*(const int& multiple, const barray& right_barray);
-		friend barray operator*=(const int& multiple, barray& right_barray);
 		// ----- 结束重载运算符 ----- //
 	};
 
