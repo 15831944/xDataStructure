@@ -43,7 +43,7 @@ namespace x
 	class node
 	{
 	private :
-		T data;
+		T d;
 		node* ln, rn;
 	public:
 		node();
@@ -97,7 +97,7 @@ namespace x
 	template<class T>
 	T node<T>::get_data()
 	{
-		return data;
+		return d;
 	}
 
 	template<class T>
