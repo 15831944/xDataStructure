@@ -53,6 +53,10 @@ namespace x
 		node* get_left();
 		node* get_right();
 		T get_data();
+
+		void set_data(const T& data);
+		void set_left(const node* const left_node = 0x00);
+		void set_right(const node* const right_node = 0x00);
 	};
 
 	// ---------- 开始 node 实现 ---------- //
@@ -96,6 +100,24 @@ namespace x
 		return data;
 	}
 
+	template<class T>
+	void node<T>::set_data(const T& data)
+	{
+		d = data;
+	}
+
+	template<class T>
+	void node<T>::set_left(const node* const left_node)
+	{
+		ln = left_node;
+	}
+
+	template<class T>
+	void node<T>::set_right(const node* const right_node)
+	{
+		rn = right_node;
+	}
+
 	// ---------- 结束 node 实现 ---------- //
 
 	// snode 节点 只有一个指针
@@ -109,8 +131,12 @@ namespace x
 		snode();
 		snode(const T& data, const snode* const next_snode = 0x00);
 		~snode();
+
 		snode* get_next();
 		T get_data();
+
+		void set_data(const T& data);
+		void set_nextsnode(const snode* const next_snode);
 	};
 
 	// ---------- 开始 snode 实现 ---------- //
@@ -146,22 +172,102 @@ namespace x
 		return d;
 	}
 
+	template<class T>
+	void snode<T>::set_data(const T& data)
+	{
+		d = data;
+	}
+
+	template<class T>
+	void snode<T>::set_nextsnode(const snode* const next_snode)
+	{
+		rn = next_snode;
+	}
+
 	// ---------- 结束 snode 实现 ---------- //
 
+	// stack 栈
 	template<class T>
 	class stack
 	{
 	private:
 		int len;
+		int status;
 		snode<T>* p;
 	public:
 		stack();
 		~stack();
-		T get_point();
+
+		T get_data();
+		int get_length();
 		bool pop();
-		bool push(T data);
-		int length();
+		void push(const T& data);
 	};
+
+	// ---------- 开始 stack 实现 ---------- //
+
+	template<class T>
+	stack<T>::stack()
+	{
+		p = 0x00;
+		len = 0;
+		status = code::INIT;
+	}
+
+	template<class T>
+	stack<T>::~stack()
+	{
+		snode<T>* n;
+		while (p != 0x00)
+		{
+			n = p->get_next();
+			delete[]p;
+			p = n;
+		}
+		len = 0;
+	}
+
+	template<class T>
+	T stack<T>::get_data()
+	{
+		return p->get_data();
+	}
+
+	template<class T>
+	int stack<T>::get_length()
+	{
+		return len;
+	}
+
+	template<class T>
+	bool stack<T>::pop()
+	{
+		if (len == 0)
+			return false;
+		snode<T>* n = p->get_next();
+		delete p;
+		p = n;
+		--len;
+		if (len == 0)
+			status = code::INIT;
+		return true;
+	}
+
+	template<class T>
+	void stack<T>::push(const T& data)
+	{
+		if (len == 0)
+		{
+			p = new snode<T>(data);
+			len = 1;
+			status = code::NORMAL;
+		}
+		snode<T>*n = new snode<T>(data,p);
+		p = n;
+		++len;
+	}
+
+	// ---------- 结束 stack 实现 ---------- //
 
 
 
