@@ -6,7 +6,7 @@
 
 namespace x
 {
-	// barry 二进制数组，unsigned char数组
+	// barry 二进制数组，unsigned char数组，长度最长为2147483647
 	class barray
 	{
 	private:
@@ -20,18 +20,18 @@ namespace x
 		~barray();
 
 		bool set_length(const int& array_length, unsigned char value = 0);  // 设置长度,默认设置为value的值
-		int get_length();  // 获取长度
-		int get_status();  // 获取状态代码
+		int get_length() const;  // 获取长度
+		int get_status() const;  // 获取状态代码
 
 
 		// ----- 以下重载运算符 ----- //
-		unsigned char& operator[](const int& num);  
+		unsigned char& operator[](const int& num) const;  
 		barray& operator=(const barray& right_barray);
-		bool operator==(const barray& right_barray);
-		bool operator!=(const barray& right_barray);
-		barray operator+(const barray& right_barray);
+		bool operator==(const barray& right_barray) const;
+		bool operator!=(const barray& right_barray) const;
+		barray operator+(const barray& right_barray) const;
 		barray& operator+=(const barray& right_barray);
-		barray operator*(const int& multiple);
+		barray operator*(const int& multiple) const;
 		barray& operator*=(const int& multiple);
 		friend barray operator*(const int& multiple, const barray& right_barray);
 		// ----- 结束重载运算符 ----- //
@@ -50,9 +50,9 @@ namespace x
 		node(const T& data, const node* const left_node = 0x00, const node* const right_node = 0x00);
 		~node();
 
-		node* get_left();
-		node* get_right();
-		T get_data();
+		node* get_left() const;
+		node* get_right() const;
+		T get_data() const;
 
 		void set_data(const T& data);
 		void set_left(const node* const left_node = 0x00);
@@ -83,19 +83,19 @@ namespace x
 	}
 
 	template<class T>
-	node<T>* node<T>::get_left()
+	node<T>* node<T>::get_left() const
 	{
 		return ln;
 	}
 
 	template<class T>
-	node<T>* node<T>::get_right()
+	node<T>* node<T>::get_right() const
 	{
 		return rn;
 	}
 
 	template<class T>
-	T node<T>::get_data()
+	T node<T>::get_data() const
 	{
 		return d;
 	}
@@ -132,8 +132,8 @@ namespace x
 		snode(const T& data, const snode* const next_snode = 0x00);
 		~snode();
 
-		snode* get_next();
-		T get_data();
+		snode* get_next() const;
+		T get_data() const;
 
 		void set_data(const T& data);
 		void set_nextsnode(const snode* const next_snode);
@@ -161,13 +161,13 @@ namespace x
 	}
 
 	template<class T>
-	snode<T>* snode<T>::get_next()
+	snode<T>* snode<T>::get_next() const
 	{
 		return rn;
 	}
 
 	template<class T>
-	T snode<T>::get_data()
+	T snode<T>::get_data() const
 	{
 		return d;
 	}
@@ -198,8 +198,8 @@ namespace x
 		stack();
 		~stack();
 
-		T get_data();
-		int get_length();
+		T get_data() const;
+		int get_length() const;
 		bool pop();
 		void push(const T& data);
 	};
@@ -228,13 +228,13 @@ namespace x
 	}
 
 	template<class T>
-	T stack<T>::get_data()
+	T stack<T>::get_data() const
 	{
 		return p->get_data();
 	}
 
 	template<class T>
-	int stack<T>::get_length()
+	int stack<T>::get_length() const
 	{
 		return len;
 	}
@@ -269,7 +269,37 @@ namespace x
 
 	// ---------- 结束 stack 实现 ---------- //
 
+	// barry_long 二进制数组，unsigned char数组，长度最长为9223372036854775807
+	class barray_long
+	{
+	private:
+		unsigned char *ba;
+		long long t;
+		int status;
+	public:
+		barray_long();
+		barray_long(const long long& array_length, unsigned char value = 0);  // 预设长度，默认设置为value的值
+		barray_long(const barray_long& origin_barray);
+		barray_long(const barray& origin_barray);
+		~barray_long();
 
+		bool set_length(const long long& array_length, unsigned char value = 0);  // 设置长度,默认设置为value的值
+		long long get_length() const;  // 获取长度
+		int get_status() const;  // 获取状态代码
+
+
+		// ----- 以下重载运算符 ----- //
+		unsigned char& operator[](const long long& num) const;
+		barray_long& operator=(const barray_long& right_barray);
+		bool operator==(const barray_long& right_barray) const;
+		bool operator!=(const barray_long& right_barray) const;
+		barray_long operator+(const barray_long& right_barray) const;
+		barray_long& operator+=(const barray_long& right_barray);
+		barray_long operator*(const int& multiple) const;
+		barray_long& operator*=(const int& multiple);
+		friend barray_long operator*(const int& multiple, const barray_long& right_barray);
+		// ----- 结束重载运算符 ----- //
+	};
 
 }
 
