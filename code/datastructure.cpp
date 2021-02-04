@@ -470,10 +470,3 @@ x::barray_long x::operator*(const int& multiple, const x::barray_long& right_bar
 		a.ba[i] = right_barray.ba[i%right_barray.t];
 	return a;
 }
-
-
-
-
-
-
-

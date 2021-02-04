@@ -295,7 +295,7 @@ namespace x
 		bool operator!=(const barray_long& right_barray) const;
 		barray_long operator+(const barray_long& right_barray) const;
 		barray_long& operator+=(const barray_long& right_barray);
-		barray_long operator*(const int& multiple) const;
+		barray_long operator*(const int& multiple) const;  // 若multiple<=0，返回空barray
 		barray_long& operator*=(const int& multiple);
 		friend barray_long operator*(const int& multiple, const barray_long& right_barray);
 		// ----- 结束重载运算符 ----- //
