@@ -179,6 +179,8 @@ x::barray x::barray::operator*(const int& multiple) const
 	if (t == 0)
 		return *this;
 	barray a;
+	if (multiple <= 0)
+		return a;
 	a.t = multiple * t;
 	a.ba = new unsigned char[a.t];
 	a.status = code::NORMAL;
@@ -191,6 +193,13 @@ x::barray& x::barray::operator*=(const int& multiple)
 {
 	if (t == 0)
 		return *this;
+	if (multiple <= 0)
+	{
+		delete[]ba;
+		t = 0;
+		status = code::INIT;
+		return *this;
+	}
 	barray a = *this;
 	t = multiple * a.t;
 	ba = new unsigned char[t];
@@ -204,6 +213,8 @@ x::barray x::operator*(const int& multiple, const x::barray& right_barray)
 	if (right_barray.t == 0)
 		return right_barray;
 	barray a;
+	if (multiple <= 0)
+		return a;
 	a.t = multiple * right_barray.t;
 	a.ba = new unsigned char[a.t];
 	a.status = code::NORMAL;
@@ -213,7 +224,13 @@ x::barray x::operator*(const int& multiple, const x::barray& right_barray)
 }
 
 
-// ********** 以下的未经过测试 ********** //
+
+
+
+
+
+
+
 
 x::barray_long::barray_long()
 {
@@ -410,6 +427,8 @@ x::barray_long x::barray_long::operator*(const int& multiple) const
 	if (t == 0)
 		return *this;
 	barray_long a;
+	if (multiple <= 0)
+		return a;
 	a.t = multiple * t;
 	a.ba = new unsigned char[a.t];
 	a.status = code::NORMAL;
@@ -422,6 +441,13 @@ x::barray_long& x::barray_long::operator*=(const int& multiple)
 {
 	if (t == 0)
 		return *this;
+	if (multiple <= 0)
+	{
+		delete[]ba;
+		t = 0;
+		status = code::INIT;
+		return *this;
+	}
 	barray_long a = *this;
 	t = multiple * a.t;
 	ba = new unsigned char[t];
@@ -435,6 +461,8 @@ x::barray_long x::operator*(const int& multiple, const x::barray_long& right_bar
 	if (right_barray.t == 0)
 		return right_barray;
 	barray_long a;
+	if (multiple <= 0)
+		return a;
 	a.t = multiple * right_barray.t;
 	a.ba = new unsigned char[a.t];
 	a.status = code::NORMAL;

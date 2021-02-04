@@ -31,7 +31,7 @@ namespace x
 		bool operator!=(const barray& right_barray) const;
 		barray operator+(const barray& right_barray) const;
 		barray& operator+=(const barray& right_barray);
-		barray operator*(const int& multiple) const;
+		barray operator*(const int& multiple) const;  // 若multiple<=0，返回空barray
 		barray& operator*=(const int& multiple);
 		friend barray operator*(const int& multiple, const barray& right_barray);
 		// ----- 结束重载运算符 ----- //
