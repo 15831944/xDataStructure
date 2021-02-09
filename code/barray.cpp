@@ -1,4 +1,4 @@
-#include"datastructure.h"
+#include"barray.h"
 
 x::barray::barray()
 {
@@ -7,7 +7,7 @@ x::barray::barray()
 	status = code::INIT;
 }
 
-x::barray::barray(const int& array_length,unsigned char value)
+x::barray::barray(const int& array_length, unsigned char value)
 {
 	if (array_length <= 0)
 	{
