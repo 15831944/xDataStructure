@@ -32,7 +32,14 @@ namespace x
 		barray(unsigned long long const* const origin_ulong, int const& origin_ulong_len);
 
 		// ----- 单个数据类型初始化 -----
-
+		barray(bool, char const& origin_char);
+		barray(bool, unsigned char const& origin_uchar);
+		barray(bool, short const& origin_short);
+		barray(bool, unsigned short const& origin_ushort);
+		barray(bool, int const& origin_int);
+		barray(bool, unsigned int const& origin_uint);
+		barray(bool, long long const& origin_long);
+		barray(bool, unsigned long long const& origin_ulong);
 
 		// ---------- 功能函数 ----------
 		bool set_length(int const& array_length, unsigned char const& value = 0);  // 设置长度,默认设置为value的值

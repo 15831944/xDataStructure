@@ -417,6 +417,9 @@ x::barray::barray(unsigned long long const* const origin_ulong, int const& origi
 	}
 }
 
+// ----- 单个数据类型初始化 -----
+
+
 // ---------- 功能函数 ----------
 bool x::barray::set_length(int const& array_length, unsigned char const& value)
 {
@@ -978,7 +981,7 @@ x::barray x::barray::operator+(char const& right_char) const
 {
 	if (t == 0)
 	{
-		return;
+		return barray(bool(), right_char);
 	}
 	if (right_barray.t == 0)
 		return *this;
