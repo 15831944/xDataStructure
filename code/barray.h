@@ -10,7 +10,7 @@ namespace x
 	{
 	private:
 		unsigned char *ba;
-		long long t;
+		int t;
 
 	public:
 		// ---------- 构造、析构函数 ----------
@@ -34,6 +34,7 @@ namespace x
 		// ----- 单个数据类型初始化 -----
 		barray(bool, char const& origin_char);
 		barray(bool, unsigned char const& origin_uchar);
+		barray(bool, bool const& origin_bool);
 		barray(bool, short const& origin_short);
 		barray(bool, unsigned short const& origin_ushort);
 		barray(bool, int const& origin_int);
@@ -44,6 +45,7 @@ namespace x
 		// ---------- 功能函数 ----------
 		bool set_length(int const& array_length, unsigned char const& value = 0);  // 设置长度,默认设置为value的值
 		int get_length() const noexcept;  // 获取长度
+		void clear() noexcept;  // 清空
 
 		// ---------- 重载运算符 ----------
 		// ----- operator[]重载 -----
@@ -86,7 +88,7 @@ namespace x
 		bool operator!=(unsigned long long const& right_ulong) const noexcept;
 
 		// ----- operator+重载 -----
-		barray operator+(barray const& right_barray) const;
+		barray operator+(barray const& right_barray) const;  // 若长度超过INT_MAX，只返回到INT_MAX的长度
 		barray operator+(char const& right_char) const;  // barray往后加1个位置，且值为char，参考用char数组初始化的构造函数
 		barray operator+(unsigned char const& right_uchar) const;
 		barray operator+(bool const& right_bool) const;  // barray往后加1个位置，且值为0或1，参考用char数组初始化的构造函数
@@ -114,7 +116,7 @@ namespace x
 		friend barray operator*(int const& multiple, barray const& right_barray);
 
 		// ----- operator*=重载 -----
-		barray& operator*=(int const& multiple);
+		barray& operator*=(int const& multiple);  // 当multiple<0时，barray长度为零
 	};
 
 
