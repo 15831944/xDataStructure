@@ -1,41 +1,50 @@
 #pragma once
-#include"code.h"
+#include "exception.h"
+#include <string>
 
 namespace x
 {
-	// barry ¶ş½øÖÆÊı×é£¬unsigned charÊı×é£¬³¤¶È×î³¤Îª2147483647
+	// barry äºŒè¿›åˆ¶æ•°ç»„ï¼Œunsigned charæ•°ç»„ï¼Œé•¿åº¦æœ€é•¿ä¸º2147483647
 	class barray
 	{
 	private:
 		unsigned char *ba;
-		int t;
-		int status;
+		long long t;
+
 	public:
-		barray();
-		barray(const int& array_length, unsigned char value = 0);  // Ô¤Éè³¤¶È£¬Ä¬ÈÏÉèÖÃÎªvalueµÄÖµ
-		barray(const barray& origin_barray);
-		~barray();
+		// æ„é€ å‡½æ•°ï¼Œæ‹·è´æ„é€ å‡½æ•°ï¼Œææ„å‡½æ•°
+		barray() noexcept;
+		explicit barray(int const& array_length, unsigned char const& value = 0);  // é¢„è®¾é•¿åº¦ï¼Œé»˜è®¤è®¾ç½®ä¸ºvalueçš„å€¼
+		barray(barray const& origin_barray);
+		barray(std::string const& origin_string);
+		barray(char const* const origin_char, int const& origin_char_len);
+		barray(unsigned char const* const origin_uchar, int const& origin_uchar_len);
+		barray(short const* const origin_short, int const& origin_short_len);
+		barray(unsigned short const* const origin_ushort, int const& origin_ushort_len);
+		barray(int const* const origin_int, int const& origin_int_len);
+		barray(unsigned int const* const origin_uint, int const& origin_uint_len);
+		barray(long long const* const origin_long, int const& origin_long_len);
+		barray(unsigned long long const* const origin_ulong, int const& origin_ulong_len);
+		~barray() noexcept;
 
-		bool set_length(const int& array_length, unsigned char value = 0);  // ÉèÖÃ³¤¶È,Ä¬ÈÏÉèÖÃÎªvalueµÄÖµ
-		int get_length() const;  // »ñÈ¡³¤¶È
-		int get_status() const;  // »ñÈ¡×´Ì¬´úÂë
+		// åŠŸèƒ½å‡½æ•°
+		bool set_length(int const& array_length, unsigned char const& value = 0);  // è®¾ç½®é•¿åº¦,é»˜è®¤è®¾ç½®ä¸ºvalueçš„å€¼
+		int get_length() const noexcept;  // è·å–é•¿åº¦
 
-
-		// ----- ÒÔÏÂÖØÔØÔËËã·û ----- //
-		unsigned char& operator[](const int& num) const;
-		barray& operator=(const barray& right_barray);
-		bool operator==(const barray& right_barray) const;
-		bool operator!=(const barray& right_barray) const;
-		barray operator+(const barray& right_barray) const;
-		barray& operator+=(const barray& right_barray);
-		barray operator*(const int& multiple) const;  // Èômultiple<=0£¬·µ»Ø¿Õbarray
-		barray& operator*=(const int& multiple);
-		friend barray operator*(const int& multiple, const barray& right_barray);
-		// ----- ½áÊøÖØÔØÔËËã·û ----- //
+		// è¿ç®—ç¬¦é‡è½½
+		unsigned char& operator[](int const & num) const;
+		barray& operator=(barray const& right_barray);
+		bool operator==(barray const& right_barray) const noexcept;
+		bool operator!=(barray const& right_barray) const noexcept;
+		barray operator+(barray const& right_barray) const;
+		barray& operator+=(barray const& right_barray);
+		barray operator*(int const& multiple) const;  // è‹¥multiple<=0ï¼Œè¿”å›ç©ºbarray
+		barray& operator*=(int const& multiple);
+		friend barray operator*(int const& multiple, const barray& right_barray);
 	};
 
-	// ********** ÒÔÏÂµÄÎ´¾­¹ı²âÊÔ ********** //
-	// barry_long ¶ş½øÖÆÊı×é£¬unsigned charÊı×é£¬³¤¶È×î³¤Îª9223372036854775807
+	// ********** ä»¥ä¸‹çš„æœªç»è¿‡æµ‹è¯• ********** //
+	// barry_long äºŒè¿›åˆ¶æ•°ç»„ï¼Œunsigned charæ•°ç»„ï¼Œé•¿åº¦æœ€é•¿ä¸º9223372036854775807
 	class barray_long
 	{
 	private:
@@ -44,26 +53,26 @@ namespace x
 		int status;
 	public:
 		barray_long();
-		barray_long(const long long& array_length, unsigned char value = 0);  // Ô¤Éè³¤¶È£¬Ä¬ÈÏÉèÖÃÎªvalueµÄÖµ
+		barray_long(const long long& array_length, unsigned char value = 0);  // é¢„è®¾é•¿åº¦ï¼Œé»˜è®¤è®¾ç½®ä¸ºvalueçš„å€¼
 		barray_long(const barray_long& origin_barray);
 		barray_long(const barray& origin_barray);
 		~barray_long();
 
-		bool set_length(const long long& array_length, unsigned char value = 0);  // ÉèÖÃ³¤¶È,Ä¬ÈÏÉèÖÃÎªvalueµÄÖµ
-		long long get_length() const;  // »ñÈ¡³¤¶È
-		int get_status() const;  // »ñÈ¡×´Ì¬´úÂë
+		bool set_length(const long long& array_length, unsigned char value = 0);  // è®¾ç½®é•¿åº¦,é»˜è®¤è®¾ç½®ä¸ºvalueçš„å€¼
+		long long get_length() const;  // è·å–é•¿åº¦
+		int get_status() const;  // è·å–çŠ¶æ€ä»£ç 
 
 
-		// ----- ÒÔÏÂÖØÔØÔËËã·û ----- //
+		// ----- ä»¥ä¸‹é‡è½½è¿ç®—ç¬¦ ----- //
 		unsigned char& operator[](const long long& num) const;
 		barray_long& operator=(const barray_long& right_barray);
 		bool operator==(const barray_long& right_barray) const;
 		bool operator!=(const barray_long& right_barray) const;
 		barray_long operator+(const barray_long& right_barray) const;
 		barray_long& operator+=(const barray_long& right_barray);
-		barray_long operator*(const int& multiple) const;  // Èômultiple<=0£¬·µ»Ø¿Õbarray
+		barray_long operator*(const int& multiple) const;  // è‹¥multiple<=0ï¼Œè¿”å›ç©ºbarray
 		barray_long& operator*=(const int& multiple);
 		friend barray_long operator*(const int& multiple, const barray_long& right_barray);
-		// ----- ½áÊøÖØÔØÔËËã·û ----- //
+		// ----- ç»“æŸé‡è½½è¿ç®—ç¬¦ ----- //
 	};
 }
