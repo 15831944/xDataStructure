@@ -630,9 +630,12 @@ int x::barray::get_length() const noexcept
 
 void x::barray::clear() noexcept
 {
-	delete[]ba;
-	t = 0;
-	ba = 0x00;
+	if (t != 0)
+	{
+		delete[]ba;
+		t = 0;
+		ba = 0x00;
+	}
 }
 
 // ---------- 重载运算符 ----------
@@ -1805,8 +1808,182 @@ x::barray x::barray::operator/(int const& divisor) const
 
 x::barray x::operator/(int const& divisor, barray const& right_barray)
 {
-
+	if (right_barray.t == 0)
+		return right_barray;
+	barray a;
+	if (divisor <= 0)
+		return a;
+	a.t = right_barray.t / divisor;
+	if (a.t == 0)
+		return a;
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	for (int i = 0; i < a.t; ++i)
+		a.ba[i] = right_barray.ba[i];
+	return a;
 }
+
+// ----- operator/=重载 -----
+x::barray& x::barray::operator/=(int const& divisor)
+{
+	if (t == 0 || divisor <= 0)
+		return *this;
+	barray a = *this;
+	t /= divisor;
+	delete[]ba;
+	if (t == 0)
+		return *this;
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	for (int i = 0; i < t; ++i)
+		ba[i] = a.ba[i];
+	return *this;
+}
+
+// ----- operator<<重载 -----
+x::barray x::barray::operator<<(int const& offset) const
+{
+	if (offset == 0)
+		return *this;
+	if (offset < 0)
+		return *this >> -offset;
+	barray a;
+	if (t > INT_MAX - offset)
+		a.t = INT_MAX;
+	else
+		a.t = t + offset;
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	int i;
+	for (i = 0; i < t; ++i)
+		a.ba[i] = ba[i];
+	for (; i < a.t; ++i)
+		a.ba[i] = 0;
+	return a;
+}
+
+// ----- operator<<=重载 -----
+
+x::barray& x::barray::operator<<=(int const& offset)
+{
+	if (offset == 0)
+		return *this;
+	if (offset < 0)
+		return *this >>= -offset;
+	if (t == 0)
+	{
+		set_length(offset);
+		return *this;
+	}
+	barray a = *this;
+	if (t > INT_MAX - offset)
+		t = INT_MAX;
+	else
+		t += offset;
+	delete[]ba;
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	int i;
+	for (i = 0; i < a.t; ++i)
+		ba[i] = a.ba[i];
+	for (; i < t; ++i)
+		ba[i] = 0;
+	return *this;
+}
+
+
+// ----- operator>>重载 -----
+x::barray x::barray::operator>>(int const& offset) const
+{
+	if (offset == 0)
+		return *this;
+	if (offset < 0)
+		return *this << -offset;
+	if (t == 0)
+		return *this;
+	barray a;
+	if (offset >= t)
+		return a;
+	a.t = t - offset;
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	int i;
+	for (i = 0; i < a.t; ++i)
+		a.ba[i] = ba[i];
+	return a;
+}
+
+// ----- operator>>=重载 -----
+x::barray& x::barray::operator>>=(int const& offset)
+{
+	if (offset == 0)
+		return *this;
+	if (offset < 0)
+		return *this <<= -offset;
+	if (t == 0)
+		return *this;
+	barray a;
+	if (offset >= t)
+		return a;
+	a = *this;
+	t -= offset;
+	delete[]ba;
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	int i;
+	for (i = 0; i < t; ++i)
+		ba[i] = a.ba[i];
+	return *this;
+}
+
 
 
 
