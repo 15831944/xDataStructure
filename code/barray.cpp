@@ -367,8 +367,8 @@ x::barray::barray(long long const* const origin_long, int const& origin_long_len
 	try
 	{
 		for (i = 0; i < t / 8; ++i)
-			for (j = 0; j < 4; ++j)
-				ba[i * 4 + j] = origin_long[i] >> j * 8;
+			for (j = 0; j < 8; ++j)
+				ba[i * 8 + j] = origin_long[i] >> j * 8;
 	}
 	catch (std::exception &e)
 	{
@@ -405,8 +405,8 @@ x::barray::barray(unsigned long long const* const origin_ulong, int const& origi
 	try
 	{
 		for (i = 0; i < t / 8; ++i)
-			for (j = 0; j < 4; ++j)
-				ba[i * 4 + j] = origin_ulong[i] >> j * 8;
+			for (j = 0; j < 8; ++j)
+				ba[i * 8 + j] = origin_ulong[i] >> j * 8;
 	}
 	catch (std::exception &e)
 	{
@@ -636,7 +636,7 @@ void x::barray::clear() noexcept
 unsigned char& x::barray::operator[](int const& num) const
 {
 	if (num < 0 || num >= t)
-		throw(range_error("Index out of range!"));
+		throw(index_error("Index out of range!"));
 	return ba[num];
 }
 
@@ -1773,7 +1773,7 @@ x::barray& x::barray::operator*=(int const& multiple)
 
 
 
-
+/*
 
 x::barray_long::barray_long()
 {
@@ -2013,3 +2013,5 @@ x::barray_long x::operator*(const int& multiple, const x::barray_long& right_bar
 		a.ba[i] = right_barray.ba[i%right_barray.t];
 	return a;
 }
+
+*/
