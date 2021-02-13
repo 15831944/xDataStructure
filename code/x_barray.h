@@ -1,5 +1,5 @@
 #pragma once
-#include "exception.h"
+#include "x_exception.h"
 #include <string>
 
 namespace x
@@ -112,11 +112,31 @@ namespace x
 		barray& operator+=(unsigned long long const& right_ulong);
 
 		// ----- operator*重载 -----
-		barray operator*(int const& multiple) const;  // 若multiple<=0，返回空barray
+		barray operator*(int const& multiple) const;  // 若multiple<=0，返回空barray。若长度超过INT_MAX，保留长度在INT_MAX以内的数据
 		friend barray operator*(int const& multiple, barray const& right_barray);
 
 		// ----- operator*=重载 -----
-		barray& operator*=(int const& multiple);  // 当multiple<0时，barray长度为零
+		barray& operator*=(int const& multiple);  // 当multiple<=0时，barray长度为零
+
+		// ********** Waiting for testing **********
+		// ----- operator/重载 -----
+		barray operator/(int const& divisor) const;  // 若divisor<=0时，返回空barray。若长度超过INT_MAX，保留长度在INT_MAX以内的数据
+		friend barray operator/(int const& divisor, barray const& right_barray);
+
+		// ----- operator/=重载 -----
+		barray& operator/=(int const& divisor);  // 当divisor<=0时，barray长度为零
+
+		// ----- operator<<重载 -----
+		barray operator<<(int const& offset) const;
+
+		// ----- operator<<=重载 -----
+		barray& operator<<=(int const& offset);
+
+		// ----- operator>>重载 -----
+		barray operator>>(int const& offset) const;
+
+		// ----- operator>>=重载 -----
+		barray& operator>>=(int const& offset);
 	};
 
 

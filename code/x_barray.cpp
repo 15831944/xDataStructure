@@ -1,4 +1,4 @@
-#include"barray.h"
+#include"x_barray.h"
 
 // ********** barry **********
 
@@ -215,7 +215,7 @@ x::barray::barray(short const* const origin_short, int const& origin_short_len)
 	try
 	{
 		for (i = 0; i < t / 2; ++i)
-			for (j = 0; j < 2; ++j)
+			for (j = 0; j < 2 && i * 2 + j < t; ++j)
 				ba[i * 2 + j] = origin_short[i] >> j * 8;
 	}
 	catch (std::exception &e)
@@ -253,7 +253,7 @@ x::barray::barray(unsigned short const* const origin_ushort, int const& origin_u
 	try
 	{
 		for (i = 0; i < t / 2; ++i)
-			for (j = 0; j < 2; ++j)
+			for (j = 0; j < 2 && i * 2 + j < t; ++j)
 				ba[i * 2 + j] = origin_ushort[i] >> j * 8;
 	}
 	catch (std::exception &e)
@@ -291,7 +291,7 @@ x::barray::barray(int const* const origin_int, int const& origin_int_len)
 	try
 	{
 		for (i = 0; i < t / 4; ++i)
-			for (j = 0; j < 4; ++j)
+			for (j = 0; i < t / 4 && i * 4 + j < t; ++j)
 				ba[i * 4 + j] = origin_int[i] >> j * 8;
 	}
 	catch (std::exception &e)
@@ -329,7 +329,7 @@ x::barray::barray(unsigned int const* const origin_uint, int const& origin_uint_
 	try
 	{
 		for (i = 0; i < t / 4; ++i)
-			for (j = 0; j < 4; ++j)
+			for (j = 0; j < 4 && i * 4 + j < t; ++j)
 				ba[i * 4 + j] = origin_uint[i] >> j * 8;
 	}
 	catch (std::exception &e)
@@ -367,7 +367,7 @@ x::barray::barray(long long const* const origin_long, int const& origin_long_len
 	try
 	{
 		for (i = 0; i < t / 8; ++i)
-			for (j = 0; j < 8; ++j)
+			for (j = 0; j < 8 && i * 8 + j < t; ++j)
 				ba[i * 8 + j] = origin_long[i] >> j * 8;
 	}
 	catch (std::exception &e)
@@ -405,7 +405,7 @@ x::barray::barray(unsigned long long const* const origin_ulong, int const& origi
 	try
 	{
 		for (i = 0; i < t / 8; ++i)
-			for (j = 0; j < 8; ++j)
+			for (j = 0; j < 8 && i * 8 + j < t; ++j)
 				ba[i * 8 + j] = origin_ulong[i] >> j * 8;
 	}
 	catch (std::exception &e)
@@ -645,7 +645,7 @@ unsigned char& x::barray::operator[](int const& num) const
 }
 
 // ----- operator=重载 -----
-x::barray& x::barray::operator=(x::barray const& right_barray)
+x::barray& x::barray::operator=(barray const& right_barray)
 {
 	if (this == &right_barray)
 		return *this;
@@ -911,7 +911,7 @@ x::barray& x::barray::operator=(unsigned long long const& right_ulong)
 }
 
 // ----- operator==重载 -----
-bool x::barray::operator==(x::barray const& right_barray) const noexcept
+bool x::barray::operator==(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.t)
 		return false;
@@ -1013,7 +1013,7 @@ bool x::barray::operator==(unsigned long long const& right_ulong) const noexcept
 }
 
 // ----- operator!=重载 -----
-bool x::barray::operator!=(x::barray const& right_barray) const noexcept
+bool x::barray::operator!=(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.t)
 		return true;
@@ -1115,7 +1115,7 @@ bool x::barray::operator!=(unsigned long long const& right_ulong) const noexcept
 }
 
 // ----- operator+重载 -----
-x::barray x::barray::operator+(x::barray const& right_barray) const
+x::barray x::barray::operator+(barray const& right_barray) const
 {
 	if (t == 0)
 		return right_barray;
@@ -1139,7 +1139,7 @@ x::barray x::barray::operator+(x::barray const& right_barray) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_barray.ba[i - t];
 	return a;
 }
@@ -1166,7 +1166,7 @@ x::barray x::barray::operator+(char const& right_char) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_char;
 	return a;
 }
@@ -1193,7 +1193,7 @@ x::barray x::barray::operator+(unsigned char const& right_uchar) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_uchar;
 	return a;
 }
@@ -1220,7 +1220,7 @@ x::barray x::barray::operator+(bool const& right_bool) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		if (right_bool)
 			a.ba[i] = 1;
 		else
@@ -1250,7 +1250,7 @@ x::barray x::barray::operator+(short const& right_short) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_short >> (i - t) * 8;
 	return a;
 }
@@ -1277,7 +1277,7 @@ x::barray x::barray::operator+(unsigned short const& right_ushort) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_ushort >> (i - t) * 8;
 	return a;
 }
@@ -1304,7 +1304,7 @@ x::barray x::barray::operator+(int const& right_int) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_int >> (i - t) * 8;
 	return a;
 }
@@ -1331,7 +1331,7 @@ x::barray x::barray::operator+(unsigned int const& right_uint) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_uint >> (i - t) * 8;
 	return a;
 }
@@ -1358,7 +1358,7 @@ x::barray x::barray::operator+(long long const& right_long) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_long >> (i - t) * 8;
 	return a;
 }
@@ -1385,13 +1385,13 @@ x::barray x::barray::operator+(unsigned long long const& right_ulong) const
 	int i;
 	for (i = 0; i < t; ++i)
 		a.ba[i] = ba[i];
-	for (i; i < a.t; ++i)
+	for (; i < a.t; ++i)
 		a.ba[i] = right_ulong >> (i - t) * 8;
 	return a;
 }
 
 // ----- operator+=重载 -----
-x::barray& x::barray::operator+=(x::barray const& right_barray)
+x::barray& x::barray::operator+=(barray const& right_barray)
 {
 	if (t == 0)
 		return *this = right_barray;
@@ -1421,9 +1421,9 @@ x::barray& x::barray::operator+=(x::barray const& right_barray)
 	}
 	delete[]ba;
 	if (a.t > INT_MAX - right_barray.t)
-t = INT_MAX;
+		t = INT_MAX;
 	else
-	t = a.t + right_barray.t;
+		t = a.t + right_barray.t;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1437,7 +1437,7 @@ t = INT_MAX;
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_barray.ba[i - a.t];
 	return *this;
 }
@@ -1463,7 +1463,7 @@ x::barray& x::barray::operator+=(char const& right_char)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_char;
 	return *this;
 }
@@ -1489,7 +1489,7 @@ x::barray& x::barray::operator+=(unsigned char const& right_uchar)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_uchar;
 	return *this;
 }
@@ -1515,7 +1515,7 @@ x::barray& x::barray::operator+=(bool const& right_bool)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		if (right_bool)
 			ba[i] = 1;
 		else
@@ -1546,7 +1546,7 @@ x::barray& x::barray::operator+=(short const& right_short)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_short >> (i - a.t) * 8;
 	return *this;
 }
@@ -1574,7 +1574,7 @@ x::barray& x::barray::operator+=(unsigned short const& right_ushort)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_ushort >> (i - a.t) * 8;
 	return *this;
 }
@@ -1602,7 +1602,7 @@ x::barray& x::barray::operator+=(int const& right_int)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_int >> (i - a.t) * 8;
 	return *this;
 }
@@ -1630,7 +1630,7 @@ x::barray& x::barray::operator+=(unsigned int const& right_uint)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_uint >> (i - a.t) * 8;
 	return *this;
 }
@@ -1658,7 +1658,7 @@ x::barray& x::barray::operator+=(long long const& right_long)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_long >> (i - a.t) * 8;
 	return *this;
 }
@@ -1686,7 +1686,7 @@ x::barray& x::barray::operator+=(unsigned long long const& right_ulong)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (i; i < t; ++i)
+	for (; i < t; ++i)
 		ba[i] = right_ulong >> (i - a.t) * 8;
 	return *this;
 }
@@ -1753,6 +1753,7 @@ x::barray& x::barray::operator*=(int const& multiple)
 	{
 		delete[]ba;
 		t = 0;
+		ba = 0x00;
 		return *this;
 	}
 	barray a = *this;
@@ -1776,6 +1777,36 @@ x::barray& x::barray::operator*=(int const& multiple)
 	return *this;
 }
 
+// ----- operator/重载 -----
+x::barray x::barray::operator/(int const& divisor) const
+{
+	if (t == 0)
+		return *this;
+	barray a;
+	if (divisor <= 0)
+		return a;
+	a.t = t / divisor;
+	if (a.t == 0)
+		return a;
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	for (int i = 0; i < a.t; ++i)
+		a.ba[i] = ba[i];
+	return a;
+}
+
+x::barray x::operator/(int const& divisor, barray const& right_barray)
+{
+
+}
 
 
 
