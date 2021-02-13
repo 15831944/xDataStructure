@@ -577,7 +577,11 @@ bool x::barray::set_length(int const& array_length, unsigned char const& value)
 	if (array_length < 0)
 		return false;
 	if (t == array_length)
+	{
+		for (int i = 0; i < t; ++i)
+			ba[i] = value;
 		return true;
+	}
 	else if (t == 0)
 	{
 		t = array_length;
@@ -653,16 +657,19 @@ x::barray& x::barray::operator=(x::barray const& right_barray)
 		ba = 0x00;
 		return *this;
 	}
-	t = right_barray.t;
-	try
+	if (t != right_barray.t)
 	{
-		ba = new unsigned char[t];
-	}
-	catch (std::exception& e)
-	{
-		t = 0;
-		ba = 0x00;
-		throw(e);
+		t = right_barray.t;
+		try
+		{
+			ba = new unsigned char[t];
+		}
+		catch (std::exception& e)
+		{
+			t = 0;
+			ba = 0x00;
+			throw(e);
+		}
 	}
 	for (int i = 0; i < t; ++i)
 		ba[i] = right_barray.ba[i];
@@ -723,7 +730,10 @@ x::barray& x::barray::operator=(bool const& right_bool)
 		delete[]ba;
 	if (t == 1)
 	{
-		ba[0] = right_bool;
+		if (right_bool)
+			ba[0] = 1;
+		else
+			ba[0] = 0;
 		return *this;
 	}
 	t = 1;
@@ -917,7 +927,7 @@ bool x::barray::operator==(char const& right_char) const noexcept
 {
 	if (t != 1)
 		return false;
-	if (ba[0] != right_char)
+	if (ba[0] != unsigned char(right_char))
 		return false;
 	return true;
 }
@@ -947,7 +957,7 @@ bool x::barray::operator==(short const& right_short) const noexcept
 	if (t != 2)
 		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_short >> i * 8)
+		if (ba[i] != unsigned char(right_short >> i * 8))
 			return false;
 	return true;
 }
@@ -957,7 +967,7 @@ bool x::barray::operator==(unsigned short const& right_ushort) const noexcept
 	if (t != 2)
 		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_ushort >> i * 8)
+		if (ba[i] != unsigned char(right_ushort >> i * 8))
 			return false;
 	return true;
 }
@@ -967,7 +977,7 @@ bool x::barray::operator==(int const& right_int) const noexcept
 	if (t != 4)
 		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_int >> i * 8)
+		if (ba[i] != unsigned char(right_int >> i * 8))
 			return false;
 	return true;
 }
@@ -977,7 +987,7 @@ bool x::barray::operator==(unsigned int const& right_uint) const noexcept
 	if (t != 4)
 		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_uint >> i * 8)
+		if (ba[i] != unsigned char(right_uint >> i * 8))
 			return false;
 	return true;
 }
@@ -987,7 +997,7 @@ bool x::barray::operator==(long long const& right_long) const noexcept
 	if (t != 8)
 		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_long >> i * 8)
+		if (ba[i] != unsigned char(right_long >> i * 8))
 			return false;
 	return true;
 }
@@ -997,7 +1007,7 @@ bool x::barray::operator==(unsigned long long const& right_ulong) const noexcept
 	if (t != 8)
 		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_ulong >> i * 8)
+		if (ba[i] != unsigned char(right_ulong >> i * 8))
 			return false;
 	return true;
 }
@@ -1008,7 +1018,7 @@ bool x::barray::operator!=(x::barray const& right_barray) const noexcept
 	if (t != right_barray.t)
 		return true;
 	if (t == 0)
-		return true;
+		return false;
 	for (int i = 0; i < t; ++i)
 		if (ba[i] != right_barray.ba[i])
 			return true;
@@ -1019,7 +1029,7 @@ bool x::barray::operator!=(char const& right_char) const noexcept
 {
 	if (t != 1)
 		return true;
-	if (ba[0] != right_char)
+	if (ba[0] != unsigned char(right_char))
 		return true;
 	return false;
 }
@@ -1049,7 +1059,7 @@ bool x::barray::operator!=(short const& right_short) const noexcept
 	if (t != 2)
 		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_short >> i * 8)
+		if (ba[i] != unsigned char(right_short >> i * 8))
 			return true;
 	return false;
 }
@@ -1059,7 +1069,7 @@ bool x::barray::operator!=(unsigned short const& right_ushort) const noexcept
 	if (t != 2)
 		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_ushort >> i * 8)
+		if (ba[i] != unsigned char(right_ushort >> i * 8))
 			return true;
 	return false;
 }
@@ -1069,7 +1079,7 @@ bool x::barray::operator!=(int const& right_int) const noexcept
 	if (t != 4)
 		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_int >> i * 8)
+		if (ba[i] != unsigned char(right_int >> i * 8))
 			return true;
 	return false;
 }
@@ -1079,7 +1089,7 @@ bool x::barray::operator!=(unsigned int const& right_uint) const noexcept
 	if (t != 4)
 		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_uint >> i * 8)
+		if (ba[i] != unsigned char(right_uint >> i * 8))
 			return true;
 	return false;
 }
@@ -1089,7 +1099,7 @@ bool x::barray::operator!=(long long const& right_long) const noexcept
 	if (t != 8)
 		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_long >> i * 8)
+		if (ba[i] != unsigned char(right_long >> i * 8))
 			return true;
 	return false;
 }
@@ -1099,7 +1109,7 @@ bool x::barray::operator!=(unsigned long long const& right_ulong) const noexcept
 	if (t != 8)
 		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_ulong >> i * 8)
+		if (ba[i] != unsigned char(right_ulong >> i * 8))
 			return true;
 	return false;
 }
