@@ -1817,8 +1817,15 @@ x::barray x::barray::operator/(int const& divisor) const
 // ----- operator/=重载 -----
 x::barray& x::barray::operator/=(int const& divisor)
 {
-	if (t == 0 || divisor <= 0)
+	if (t == 0 )
 		return *this;
+	if (divisor <= 0)
+	{
+		delete[] ba;
+		ba = 0x00;
+		t = 0;
+		return *this;
+	}
 	barray a;
 	a.ba = ba;
 	a.t = t;
@@ -1985,7 +1992,12 @@ x::barray& x::barray::operator>>=(int const& offset)
 	if (offset == 0 || t == 0)
 		return *this;
 	if ((offset > 0 && t <= offset) || (offset < 0 && t + offset <= 0))
-		return *this = unsigned char(0x00);
+	{
+		delete[] ba;
+		ba = 0x00;
+		t = 0;
+		return *this;
+	}
 	barray a;
 	a.ba = ba;
 	a.t = t;
