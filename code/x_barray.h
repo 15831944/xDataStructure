@@ -1,4 +1,4 @@
-#pragma once
+﻿#pragma once
 #include "x_exception.h"
 #include <string>
 
@@ -121,19 +121,18 @@ namespace x
 		// ********** Waiting for testing **********
 		// ----- operator/重载 -----
 		barray operator/(int const& divisor) const;  // 若divisor<=0时，返回空barray。若长度超过INT_MAX，保留长度在INT_MAX以内的数据
-		friend barray operator/(int const& divisor, barray const& right_barray);
 
 		// ----- operator/=重载 -----
 		barray& operator/=(int const& divisor);  // 当divisor<=0时，barray长度为零
 
 		// ----- operator<<重载 -----
-		barray operator<<(int const& offset) const;
+		barray operator<<(int const& offset) const;  // 当offset为正数的时候，则在索引0向后添加offset个值为0x00的字节；当offset为负数的时候，则在最大索引往前添加offset个值为0x00的字节。若barray的长度超过INT_MAX，则优先保存原barray的值，值为0x00的字节则补到长度为INT_MAX为止
 
 		// ----- operator<<=重载 -----
 		barray& operator<<=(int const& offset);
 
 		// ----- operator>>重载 -----
-		barray operator>>(int const& offset) const;
+		barray operator>>(int const& offset) const;  // 当offset为正数的时候，则在索引0向前删除offset个字节；当offset为负数的时候，则在最大索引向后删除offset个字节。offset的绝对值大于原barray的长度，则返回长度为0的barray
 
 		// ----- operator>>=重载 -----
 		barray& operator>>=(int const& offset);

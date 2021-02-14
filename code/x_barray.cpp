@@ -1,8 +1,8 @@
-#include"x_barray.h"
+Ôªø#include"x_barray.h"
 
 // ********** barry **********
 
-// ---------- ππ‘Ï°¢Œˆππ∫Ø ˝ ----------
+// ---------- ÊûÑÈÄ†„ÄÅÊûêÊûÑÂáΩÊï∞ ----------
 x::barray::barray() noexcept :ba(0x00), t(0)
 {}
 
@@ -55,12 +55,12 @@ x::barray::barray(int const& array_length, unsigned char const& value)
 x::barray::~barray()
 {
 	if (t > 0)
-		delete[]ba;
+		delete[] ba;
 	ba = 0x00;
 	t = 0;
 }
 
-// -----  ˝◊È≥ı ºªØ -----
+// ----- Êï∞ÁªÑÂàùÂßãÂåñ -----
 x::barray::barray(std::string const& origin_string)
 {
 	if (origin_string.length() == 0)
@@ -417,7 +417,7 @@ x::barray::barray(unsigned long long const* const origin_ulong, int const& origi
 	}
 }
 
-// ----- µ•∏ˆ ˝æ›¿‡–Õ≥ı ºªØ -----
+// ----- Âçï‰∏™Êï∞ÊçÆÁ±ªÂûãÂàùÂßãÂåñ -----
 x::barray::barray(bool, char const& origin_char)
 {
 	t = 1;
@@ -571,7 +571,7 @@ x::barray::barray(bool, unsigned long long const& origin_ulong)
 		ba[i] = origin_ulong >> i * 8;
 }
 
-// ---------- π¶ƒ‹∫Ø ˝ ----------
+// ---------- ÂäüËÉΩÂáΩÊï∞ ----------
 bool x::barray::set_length(int const& array_length, unsigned char const& value)
 {
 	if (array_length < 0)
@@ -638,8 +638,8 @@ void x::barray::clear() noexcept
 	}
 }
 
-// ---------- ÷ÿ‘ÿ‘ÀÀ„∑˚ ----------
-// ----- operator[]÷ÿ‘ÿ -----
+// ---------- ÈáçËΩΩËøêÁÆóÁ¨¶ ----------
+// ----- operator[]ÈáçËΩΩ -----
 unsigned char& x::barray::operator[](int const& num) const
 {
 	if (num < 0 || num >= t)
@@ -647,7 +647,7 @@ unsigned char& x::barray::operator[](int const& num) const
 	return ba[num];
 }
 
-// ----- operator=÷ÿ‘ÿ -----
+// ----- operator=ÈáçËΩΩ -----
 x::barray& x::barray::operator=(barray const& right_barray)
 {
 	if (this == &right_barray)
@@ -913,7 +913,7 @@ x::barray& x::barray::operator=(unsigned long long const& right_ulong)
 	return *this;
 }
 
-// ----- operator==÷ÿ‘ÿ -----
+// ----- operator==ÈáçËΩΩ -----
 bool x::barray::operator==(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.t)
@@ -1015,7 +1015,7 @@ bool x::barray::operator==(unsigned long long const& right_ulong) const noexcept
 	return true;
 }
 
-// ----- operator!=÷ÿ‘ÿ -----
+// ----- operator!=ÈáçËΩΩ -----
 bool x::barray::operator!=(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.t)
@@ -1117,7 +1117,7 @@ bool x::barray::operator!=(unsigned long long const& right_ulong) const noexcept
 	return false;
 }
 
-// ----- operator+÷ÿ‘ÿ -----
+// ----- operator+ÈáçËΩΩ -----
 x::barray x::barray::operator+(barray const& right_barray) const
 {
 	if (t == 0)
@@ -1393,36 +1393,16 @@ x::barray x::barray::operator+(unsigned long long const& right_ulong) const
 	return a;
 }
 
-// ----- operator+=÷ÿ‘ÿ -----
+// ----- operator+=ÈáçËΩΩ -----
 x::barray& x::barray::operator+=(barray const& right_barray)
 {
 	if (t == 0)
 		return *this = right_barray;
 	if (right_barray.t == 0)
 		return *this;
-	barray a = *this;
-	if (this == &right_barray)
-	{
-		delete[]ba;
-		if (a.t > INT_MAX / 2)
-			t = INT_MAX;
-		else
-			t = 2 * a.t;
-		try
-		{
-			ba = new unsigned char[t];
-		}
-		catch (std::exception& e)
-		{
-			t = 0;
-			ba = 0x00;
-			throw(e);
-		}
-		for (int i = 0; i < t; ++i)
-			ba[i] = a.ba[i%a.t];
-		return *this;
-	}
-	delete[]ba;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (a.t > INT_MAX - right_barray.t)
 		t = INT_MAX;
 	else
@@ -1437,6 +1417,12 @@ x::barray& x::barray::operator+=(barray const& right_barray)
 		ba = 0x00;
 		throw(e);
 	}
+	if (this == &right_barray)
+	{
+		for (int i = 0; i < t; ++i)
+			ba[i] = a.ba[i%a.t];
+		return *this;
+	}
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
@@ -1449,10 +1435,12 @@ x::barray& x::barray::operator+=(char const& right_char)
 {
 	if (t == 0)
 		return *this = right_char;
-	barray a = *this;
-	if (t < INT_MAX)
-		++t;
-	delete[]ba;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
+	++t;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1466,8 +1454,7 @@ x::barray& x::barray::operator+=(char const& right_char)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (; i < t; ++i)
-		ba[i] = right_char;
+	ba[i] = right_char;
 	return *this;
 }
 
@@ -1475,10 +1462,12 @@ x::barray& x::barray::operator+=(unsigned char const& right_uchar)
 {
 	if (t == 0)
 		return *this = right_uchar;
-	barray a = *this;
-	if (t < INT_MAX)
-		++t;
-	delete[]ba;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
+	++t;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1492,8 +1481,7 @@ x::barray& x::barray::operator+=(unsigned char const& right_uchar)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (; i < t; ++i)
-		ba[i] = right_uchar;
+	ba[i] = right_uchar;
 	return *this;
 }
 
@@ -1501,10 +1489,12 @@ x::barray& x::barray::operator+=(bool const& right_bool)
 {
 	if (t == 0)
 		return *this = right_bool;
-	barray a = *this;
-	if (t < INT_MAX)
-		++t;
-	delete[]ba;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
+	++t;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1518,11 +1508,10 @@ x::barray& x::barray::operator+=(bool const& right_bool)
 	int i;
 	for (i = 0; i < a.t; ++i)
 		ba[i] = a.ba[i];
-	for (; i < t; ++i)
-		if (right_bool)
-			ba[i] = 1;
-		else
-			ba[i] = 0;
+	if (right_bool)
+		ba[i] = 1;
+	else
+		ba[i] = 0;
 	return *this;
 }
 
@@ -1530,12 +1519,15 @@ x::barray& x::barray::operator+=(short const& right_short)
 {
 	if (t == 0)
 		return *this = right_short;
-	barray a = *this;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (t > INT_MAX - 2)
 		t = INT_MAX;
 	else
 		t += 2;
-	delete[]ba;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1558,12 +1550,15 @@ x::barray& x::barray::operator+=(unsigned short const& right_ushort)
 {
 	if (t == 0)
 		return *this = right_ushort;
-	barray a = *this;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (t > INT_MAX - 2)
 		t = INT_MAX;
 	else
 		t += 2;
-	delete[]ba;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1586,12 +1581,15 @@ x::barray& x::barray::operator+=(int const& right_int)
 {
 	if (t == 0)
 		return *this = right_int;
-	barray a = *this;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (t > INT_MAX - 4)
 		t = INT_MAX;
 	else
 		t += 4;
-	delete[]ba;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1614,12 +1612,15 @@ x::barray& x::barray::operator+=(unsigned int const& right_uint)
 {
 	if (t == 0)
 		return *this = right_uint;
-	barray a = *this;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (t > INT_MAX - 4)
 		t = INT_MAX;
 	else
 		t += 4;
-	delete[]ba;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1642,12 +1643,15 @@ x::barray& x::barray::operator+=(long long const& right_long)
 {
 	if (t == 0)
 		return *this = right_long;
-	barray a = *this;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (t > INT_MAX - 8)
 		t = INT_MAX;
 	else
 		t += 8;
-	delete[]ba;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1670,12 +1674,15 @@ x::barray& x::barray::operator+=(unsigned long long const& right_ulong)
 {
 	if (t == 0)
 		return *this = right_ulong;
-	barray a = *this;
+	else if (t == INT_MAX)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (t > INT_MAX - 8)
 		t = INT_MAX;
 	else
 		t += 8;
-	delete[]ba;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1694,7 +1701,7 @@ x::barray& x::barray::operator+=(unsigned long long const& right_ulong)
 	return *this;
 }
 
-// ----- operator*÷ÿ‘ÿ -----
+// ----- operator*ÈáçËΩΩ -----
 x::barray x::barray::operator*(int const& multiple) const
 {
 	if (t == 0)
@@ -1747,7 +1754,7 @@ x::barray x::operator*(int const& multiple, x::barray const& right_barray)
 	return a;
 }
 
-// ----- operator*=÷ÿ‘ÿ -----
+// ----- operator*=ÈáçËΩΩ -----
 x::barray& x::barray::operator*=(int const& multiple)
 {
 	if (t == 0)
@@ -1759,8 +1766,9 @@ x::barray& x::barray::operator*=(int const& multiple)
 		ba = 0x00;
 		return *this;
 	}
-	barray a = *this;
-	delete[]ba;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	if (a.t > INT_MAX / multiple)
 		t = INT_MAX;
 	else
@@ -1780,7 +1788,7 @@ x::barray& x::barray::operator*=(int const& multiple)
 	return *this;
 }
 
-// ----- operator/÷ÿ‘ÿ -----
+// ----- operator/ÈáçËΩΩ -----
 x::barray x::barray::operator/(int const& divisor) const
 {
 	if (t == 0)
@@ -1806,46 +1814,25 @@ x::barray x::barray::operator/(int const& divisor) const
 	return a;
 }
 
-x::barray x::operator/(int const& divisor, barray const& right_barray)
-{
-	if (right_barray.t == 0)
-		return right_barray;
-	barray a;
-	if (divisor <= 0)
-		return a;
-	a.t = right_barray.t / divisor;
-	if (a.t == 0)
-		return a;
-	try
-	{
-		a.ba = new unsigned char[a.t];
-	}
-	catch (std::exception& e)
-	{
-		a.t = 0;
-		a.ba = 0x00;
-		throw(e);
-	}
-	for (int i = 0; i < a.t; ++i)
-		a.ba[i] = right_barray.ba[i];
-	return a;
-}
-
-// ----- operator/=÷ÿ‘ÿ -----
+// ----- operator/=ÈáçËΩΩ -----
 x::barray& x::barray::operator/=(int const& divisor)
 {
 	if (t == 0 || divisor <= 0)
 		return *this;
-	barray a = *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
 	t /= divisor;
-	delete[]ba;
 	if (t == 0)
+	{
+		ba = 0x00;
 		return *this;
+	}
 	try
 	{
 		ba = new unsigned char[t];
 	}
-	catch (std::exception& e)
+	catch (std::exception &e)
 	{
 		t = 0;
 		ba = 0x00;
@@ -1856,16 +1843,120 @@ x::barray& x::barray::operator/=(int const& divisor)
 	return *this;
 }
 
-// ----- operator<<÷ÿ‘ÿ -----
+// ----- operator<<ÈáçËΩΩ -----
 x::barray x::barray::operator<<(int const& offset) const
 {
-	if (offset == 0)
+	if (offset == 0 || t == INT_MAX)
 		return *this;
-	if (offset < 0)
-		return *this >> -offset;
 	barray a;
-	if (t > INT_MAX - offset)
-		a.t = INT_MAX;
+	if (offset > 0)
+	{
+		if (t > INT_MAX - offset)
+			a.t = INT_MAX;
+		else
+			a.t = t + offset;
+	}
+	else
+	{
+		if (t > INT_MAX + offset)
+			a.t = INT_MAX;
+		else
+			a.t = t - offset;
+	}
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	int i;
+	if (offset > 0)
+	{
+		for (i = a.t - 1; i > a.t - t - 1; --i)
+			a.ba[i] = ba[i - a.t + t];
+		for (; i > -1; --i)
+			a.ba[i] = 0;
+	}
+	else
+	{
+		for (i = 0; i < t; ++i)
+			a.ba[i] = ba[i];
+		for (; i < a.t; ++i)
+			a.ba[i] = 0;
+	}
+	return a;
+}
+
+// ----- operator<<=ÈáçËΩΩ -----
+
+x::barray& x::barray::operator<<=(int const& offset)
+{
+	if (offset == 0 || t == INT_MAX)
+		return *this;
+	if (t == 0)
+	{
+		set_length(offset);
+		return *this;
+	}
+	barray a;
+	a.ba = ba;
+	a.t = t;
+	if (offset > 0)
+	{
+		if (a.t > INT_MAX - offset)
+			t = INT_MAX;
+		else
+			t = a.t + offset;
+	}
+	else
+	{
+		if (a.t > INT_MAX + offset)
+			t = INT_MAX;
+		else
+			t = a.t - offset;
+	}
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	int i;
+	if (offset > 0)
+	{
+		for (i = t - 1; i > t - a.t - 1; --i)
+			ba[i] = a.ba[i - t + a.t];
+		for (; i > -1; --i)
+			ba[i] = 0;
+	}
+	else
+	{
+		for (i = 0; i < a.t; ++i)
+			ba[i] = a.ba[i];
+		for (; i < t; ++i)
+			ba[i] = 0;
+	}
+	return *this;
+}
+
+// ----- operator>>ÈáçËΩΩ -----
+x::barray x::barray::operator>>(int const& offset) const
+{
+	if (offset == 0 || t == 0)
+		return *this;
+	barray a;
+	if ((offset > 0 && t <= offset) || (offset < 0 && t + offset <= 0))
+		return a;
+	if (offset > 0)
+		a.t = t - offset;
 	else
 		a.t = t + offset;
 	try
@@ -1879,95 +1970,29 @@ x::barray x::barray::operator<<(int const& offset) const
 		throw(e);
 	}
 	int i;
-	for (i = 0; i < t; ++i)
-		a.ba[i] = ba[i];
-	for (; i < a.t; ++i)
-		a.ba[i] = 0;
-	return a;
-}
-
-// ----- operator<<=÷ÿ‘ÿ -----
-
-x::barray& x::barray::operator<<=(int const& offset)
-{
-	if (offset == 0)
-		return *this;
-	if (offset < 0)
-		return *this >>= -offset;
-	if (t == 0)
-	{
-		set_length(offset);
-		return *this;
-	}
-	barray a = *this;
-	if (t > INT_MAX - offset)
-		t = INT_MAX;
+	if (offset > 0)
+		for (i = a.t - 1; i > -1; --i)
+			a.ba[i] = ba[i - a.t + t];
 	else
-		t += offset;
-	delete[]ba;
-	try
-	{
-		ba = new unsigned char[t];
-	}
-	catch (std::exception& e)
-	{
-		t = 0;
-		ba = 0x00;
-		throw(e);
-	}
-	int i;
-	for (i = 0; i < a.t; ++i)
-		ba[i] = a.ba[i];
-	for (; i < t; ++i)
-		ba[i] = 0;
-	return *this;
-}
-
-
-// ----- operator>>÷ÿ‘ÿ -----
-x::barray x::barray::operator>>(int const& offset) const
-{
-	if (offset == 0)
-		return *this;
-	if (offset < 0)
-		return *this << -offset;
-	if (t == 0)
-		return *this;
-	barray a;
-	if (offset >= t)
-		return a;
-	a.t = t - offset;
-	try
-	{
-		a.ba = new unsigned char[a.t];
-	}
-	catch (std::exception& e)
-	{
-		a.t = 0;
-		a.ba = 0x00;
-		throw(e);
-	}
-	int i;
-	for (i = 0; i < a.t; ++i)
-		a.ba[i] = ba[i];
+		for (i = 0; i < a.t; ++i)
+			a.ba[i] = ba[i];
 	return a;
 }
 
-// ----- operator>>=÷ÿ‘ÿ -----
+// ----- operator>>=ÈáçËΩΩ -----
 x::barray& x::barray::operator>>=(int const& offset)
 {
-	if (offset == 0)
+	if (offset == 0 || t == 0)
 		return *this;
-	if (offset < 0)
-		return *this <<= -offset;
-	if (t == 0)
-		return *this;
+	if ((offset > 0 && t <= offset) || (offset < 0 && t + offset <= 0))
+		return *this = unsigned char(0x00);
 	barray a;
-	if (offset >= t)
-		return a;
-	a = *this;
-	t -= offset;
-	delete[]ba;
+	a.ba = ba;
+	a.t = t;
+	if (offset > 0)
+		t -= offset;
+	else
+		t += offset;
 	try
 	{
 		ba = new unsigned char[t];
@@ -1979,8 +2004,12 @@ x::barray& x::barray::operator>>=(int const& offset)
 		throw(e);
 	}
 	int i;
-	for (i = 0; i < t; ++i)
-		ba[i] = a.ba[i];
+	if (offset > 0)
+		for (i = t - 1; i > -1; --i)
+			ba[i] = a.ba[i + offset];
+	else
+		for (i = 0; i < t; ++i)
+			ba[i] = a.ba[i];
 	return *this;
 }
 
