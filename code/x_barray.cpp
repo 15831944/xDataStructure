@@ -29,7 +29,7 @@ x::barray::barray(barray const& origin_barray)
 		ba[i] = origin_barray.ba[i];
 }
 
-x::barray::barray(int const& array_length, unsigned char const& value)
+x::barray::barray(bool, int const& array_length, unsigned char const& value)
 {
 	if (array_length <= 0)
 	{
@@ -418,7 +418,7 @@ x::barray::barray(unsigned long long const* const origin_ulong, int const& origi
 }
 
 // ----- 单个数据类型初始化 -----
-x::barray::barray(bool, char const& origin_char)
+x::barray::barray(char const& origin_char)
 {
 	t = 1;
 	try
@@ -434,7 +434,7 @@ x::barray::barray(bool, char const& origin_char)
 	ba[0] = origin_char;
 }
 
-x::barray::barray(bool, unsigned char const& origin_uchar)
+x::barray::barray(unsigned char const& origin_uchar)
 {
 	t = 1;
 	try
@@ -450,7 +450,7 @@ x::barray::barray(bool, unsigned char const& origin_uchar)
 	ba[0] = origin_uchar;
 }
 
-x::barray::barray(bool, bool const& origin_bool)
+x::barray::barray(bool const& origin_bool)
 {
 	t = 1;
 	try
@@ -469,7 +469,7 @@ x::barray::barray(bool, bool const& origin_bool)
 		ba[0] = 0;
 }
 
-x::barray::barray(bool, short const& origin_short)
+x::barray::barray(short const& origin_short)
 {
 	t = 2;
 	try
@@ -486,7 +486,7 @@ x::barray::barray(bool, short const& origin_short)
 		ba[i] = origin_short >> i * 8;
 }
 
-x::barray::barray(bool, unsigned short const& origin_ushort)
+x::barray::barray(unsigned short const& origin_ushort)
 {
 	t = 2;
 	try
@@ -503,7 +503,7 @@ x::barray::barray(bool, unsigned short const& origin_ushort)
 		ba[i] = origin_ushort >> i * 8;
 }
 
-x::barray::barray(bool, int const& origin_int)
+x::barray::barray(int const& origin_int)
 {
 	t = 4;
 	try
@@ -520,7 +520,7 @@ x::barray::barray(bool, int const& origin_int)
 		ba[i] = origin_int >> i * 8;
 }
 
-x::barray::barray(bool, unsigned int const& origin_uint)
+x::barray::barray(unsigned int const& origin_uint)
 {
 	t = 4;
 	try
@@ -537,7 +537,7 @@ x::barray::barray(bool, unsigned int const& origin_uint)
 		ba[i] = origin_uint >> i * 8;
 }
 
-x::barray::barray(bool, long long const& origin_long)
+x::barray::barray(long long const& origin_long)
 {
 	t = 8;
 	try
@@ -554,7 +554,7 @@ x::barray::barray(bool, long long const& origin_long)
 		ba[i] = origin_long >> i * 8;
 }
 
-x::barray::barray(bool, unsigned long long const& origin_ulong)
+x::barray::barray(unsigned long long const& origin_ulong)
 {
 	t = 8;
 	try
