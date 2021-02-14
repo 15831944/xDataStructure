@@ -118,7 +118,6 @@ namespace x
 		// ----- operator*=重载 -----
 		barray& operator*=(int const& multiple);  // 当multiple<=0时，barray长度为零
 
-		// ********** Waiting for testing **********
 		// ----- operator/重载 -----
 		barray operator/(int const& divisor) const;  // 若divisor<=0时，返回空barray。若长度超过INT_MAX，保留长度在INT_MAX以内的数据
 
