@@ -67,28 +67,48 @@ namespace x
 		// ----- operator==重载 -----
 		bool operator==(barray const& right_barray) const noexcept;
 		bool operator==(std::string const& right_string) const noexcept;
+		friend bool operator==(std::string const& left_string, barray const& right_barray) noexcept;
 		bool operator==(char const& right_char) const noexcept;
+		friend bool operator==(char const& left_char, barray const& right_barray) noexcept;
 		bool operator==(unsigned char const& right_uchar) const noexcept;
+		friend bool operator==(unsigned char const& left_uchar, barray const& right_barray) noexcept;
 		bool operator==(bool const& right_bool) const noexcept;
+		friend bool operator==(bool const& left_bool, barray const& right_barray) noexcept;
 		bool operator==(short const& right_short) const noexcept;
+		friend bool operator==(short const& left_short, barray const& right_barray) noexcept;
 		bool operator==(unsigned short const& right_ushort) const noexcept;
+		friend bool operator==(unsigned short const& left_ushort, barray const& right_barray) noexcept;
 		bool operator==(int const& right_int) const noexcept;
+		friend bool operator==(int const& left_int, barray const& right_barray) noexcept;
 		bool operator==(unsigned int const& right_uint) const noexcept;
+		friend bool operator==(unsigned int const& left_uint, barray const& right_barray) noexcept;
 		bool operator==(long long const& right_long) const noexcept;
+		friend bool operator==(long long const& left_long, barray const& right_barray) noexcept;
 		bool operator==(unsigned long long const& right_ulong) const noexcept;
+		friend bool operator==(unsigned long long const& left_ulong, barray const& right_barray) noexcept;
 
 		// ----- operator!=重载 -----
 		bool operator!=(barray const& right_barray) const noexcept;
 		bool operator!=(std::string const& right_string) const noexcept;
+		friend bool operator!=(std::string const& left_string, barray const& right_barray) noexcept;
 		bool operator!=(char const& right_char) const noexcept;
+		friend bool operator!=(char const& left_char, barray const& right_barray) noexcept;
 		bool operator!=(unsigned char const& right_uchar) const noexcept;
+		friend bool operator!=(unsigned char const& left_uchar, barray const& right_barray) noexcept;
 		bool operator!=(bool const& right_bool) const noexcept;
+		friend bool operator!=(bool const& left_bool, barray const& right_barray) noexcept;
 		bool operator!=(short const& right_short) const noexcept;
+		friend bool operator!=(short const& left_short, barray const& right_barray) noexcept;
 		bool operator!=(unsigned short const& right_ushort) const noexcept;
+		friend bool operator!=(unsigned short const& left_ushort, barray const& right_barray) noexcept;
 		bool operator!=(int const& right_int) const noexcept;
+		friend bool operator!=(int const& left_int, barray const& right_barray) noexcept;
 		bool operator!=(unsigned int const& right_uint) const noexcept;
+		friend bool operator!=(unsigned int const& left_uint, barray const& right_barray) noexcept;
 		bool operator!=(long long const& right_long) const noexcept;
+		friend bool operator!=(long long const& left_long, barray const& right_barray) noexcept;
 		bool operator!=(unsigned long long const& right_ulong) const noexcept;
+		friend bool operator!=(unsigned long long const& left_ulong, barray const& right_barray) noexcept;
 
 		// ----- operator+重载 -----
 		barray operator+(barray const& right_barray) const;  // 若长度超过INT_MAX，只返回到INT_MAX的长度
@@ -216,36 +236,56 @@ namespace x
 		bool operator==(barray const& right_barray) const noexcept;
 		friend bool operator==(barray const& left_barray, barray_long const& right_barray_long) noexcept;
 		bool operator==(std::string const& right_string) const noexcept;
+		friend bool operator==(std::string const& left_string, barray_long const& right_barray_long) noexcept;
 		bool operator==(char const& right_char) const noexcept;
+		friend bool operator==(char const& left_char, barray_long const& right_barray_long) noexcept;
 		bool operator==(unsigned char const& right_uchar) const noexcept;
+		friend bool operator==(unsigned char const& left_uchar, barray_long const& right_barray_long) noexcept;
 		bool operator==(bool const& right_bool) const noexcept;
+		friend bool operator==(bool const& left_bool, barray_long const& right_barray_long) noexcept;
 		bool operator==(short const& right_short) const noexcept;
+		friend bool operator==(short const& left_short, barray_long const& right_barray_long) noexcept;
 		bool operator==(unsigned short const& right_ushort) const noexcept;
+		friend bool operator==(unsigned short const& left_ushort, barray_long const& right_barray_long) noexcept;
 		bool operator==(int const& right_int) const noexcept;
+		friend bool operator==(int const& left_int, barray_long const& right_barray_long) noexcept;
 		bool operator==(unsigned int const& right_uint) const noexcept;
+		friend bool operator==(unsigned int const& left_uint, barray_long const& right_barray_long) noexcept;
 		bool operator==(long long const& right_long) const noexcept;
+		friend bool operator==(long long const& left_long, barray_long const& right_barray_long) noexcept;
 		bool operator==(unsigned long long const& right_ulong) const noexcept;
+		friend bool operator==(unsigned long long const& left_ulong, barray_long const& right_barray_long) noexcept;
 
 		// ----- operator!=重载 -----
 		bool operator!=(barray_long const& right_barray_long) const noexcept;
 		bool operator!=(barray const& right_barray) const noexcept;
 		friend bool operator!=(barray const& left_barray, barray_long const& right_barray_long) noexcept;
 		bool operator!=(std::string const& right_string) const noexcept;
+		friend bool operator!=(std::string const& left_string, barray_long const& right_barray_long) noexcept;
 		bool operator!=(char const& right_char) const noexcept;
+		friend bool operator!=(char const& left_char, barray_long const& right_barray_long) noexcept;
 		bool operator!=(unsigned char const& right_uchar) const noexcept;
+		friend bool operator!=(unsigned char const& left_uchar, barray_long const& right_barray_long) noexcept;
 		bool operator!=(bool const& right_bool) const noexcept;
+		friend bool operator!=(bool const& left_bool, barray_long const& right_barray_long) noexcept;
 		bool operator!=(short const& right_short) const noexcept;
+		friend bool operator!=(short const& left_short, barray_long const& right_barray_long) noexcept;
 		bool operator!=(unsigned short const& right_ushort) const noexcept;
+		friend bool operator!=(unsigned short const& left_ushort, barray_long const& right_barray_long) noexcept;
 		bool operator!=(int const& right_int) const noexcept;
+		friend bool operator!=(int const& left_int, barray_long const& right_barray_long) noexcept;
 		bool operator!=(unsigned int const& right_uint) const noexcept;
+		friend bool operator!=(unsigned int const& left_uint, barray_long const& right_barray_long) noexcept;
 		bool operator!=(long long const& right_long) const noexcept;
+		friend bool operator!=(long long const& left_long, barray_long const& right_barray_long) noexcept;
 		bool operator!=(unsigned long long const& right_ulong) const noexcept;
+		friend bool operator!=(unsigned long long const& left_ulong, barray_long const& right_barray_long) noexcept;
 
 		// ----- operator+重载 -----
 		barray_long operator+(barray_long const& right_barray_long) const;  // 若长度超过LLONG_MAX，只返回到LLONG_MAX的长度
 		barray_long operator+(barray const& right_barray) const;
 		friend barray_long operator+(barray const& left_barray, barray_long const& right_barray_long);
-		barray_long operator+(std::string const& right_string);  // 若长度超过LLONG_MAX，只返回到LLONG_MAX的长度
+		barray_long operator+(std::string const& right_string) const;  // 若长度超过LLONG_MAX，只返回到LLONG_MAX的长度
 		barray_long operator+(char const& right_char) const;  // barray_long往后加1个位置，且值为char，参考用char数组初始化的构造函数
 		barray_long operator+(unsigned char const& right_uchar) const;
 		barray_long operator+(bool const& right_bool) const;  // barray_long往后加1个位置，且值为0或1，参考用char数组初始化的构造函数

@@ -953,8 +953,6 @@ bool x::barray::operator==(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.t)
 		return false;
-	if (t == 0)
-		return true;
 	for (int i = 0; i < t; ++i)
 		if (ba[i] != right_barray.ba[i])
 			return false;
@@ -965,12 +963,15 @@ bool x::barray::operator==(std::string const& right_string) const noexcept
 {
 	if (t != right_string.length())
 		return false;
-	if (t == 0)
-		return true;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_string[i])
+		if (ba[i] != unsigned char(right_string[i]))
 			return false;
 	return true;
+}
+
+bool x::operator==(std::string const& left_string, barray const& right_barray) noexcept
+{
+	return right_barray == left_string;
 }
 
 bool x::barray::operator==(char const& right_char) const noexcept
@@ -982,6 +983,11 @@ bool x::barray::operator==(char const& right_char) const noexcept
 	return true;
 }
 
+bool x::operator==(char const& left_char, barray const& right_barray) noexcept
+{
+	return right_barray == left_char;
+}
+
 bool x::barray::operator==(unsigned char const& right_uchar) const noexcept
 {
 	if (t != 1)
@@ -989,6 +995,11 @@ bool x::barray::operator==(unsigned char const& right_uchar) const noexcept
 	if (ba[0] != right_uchar)
 		return false;
 	return true;
+}
+
+bool x::operator==(unsigned char const& left_uchar, barray const& right_barray) noexcept
+{
+	return right_barray == left_uchar;
 }
 
 bool x::barray::operator==(bool const& right_bool) const noexcept
@@ -1002,6 +1013,11 @@ bool x::barray::operator==(bool const& right_bool) const noexcept
 	return true;
 }
 
+bool x::operator==(bool const& left_bool, barray const& right_barray) noexcept
+{
+	return right_barray == left_bool;
+}
+
 bool x::barray::operator==(short const& right_short) const noexcept
 {
 	if (t != 2)
@@ -1010,6 +1026,11 @@ bool x::barray::operator==(short const& right_short) const noexcept
 		if (ba[i] != unsigned char(right_short >> i * 8))
 			return false;
 	return true;
+}
+
+bool x::operator==(short const& left_short, barray const& right_barray) noexcept
+{
+	return right_barray == left_short;
 }
 
 bool x::barray::operator==(unsigned short const& right_ushort) const noexcept
@@ -1022,6 +1043,11 @@ bool x::barray::operator==(unsigned short const& right_ushort) const noexcept
 	return true;
 }
 
+bool x::operator==(unsigned short const& left_ushort, barray const& right_barray) noexcept
+{
+	return right_barray == left_ushort;
+}
+
 bool x::barray::operator==(int const& right_int) const noexcept
 {
 	if (t != 4)
@@ -1030,6 +1056,11 @@ bool x::barray::operator==(int const& right_int) const noexcept
 		if (ba[i] != unsigned char(right_int >> i * 8))
 			return false;
 	return true;
+}
+
+bool x::operator==(int const& left_int, barray const& right_barray) noexcept
+{
+	return right_barray == left_int;
 }
 
 bool x::barray::operator==(unsigned int const& right_uint) const noexcept
@@ -1042,6 +1073,11 @@ bool x::barray::operator==(unsigned int const& right_uint) const noexcept
 	return true;
 }
 
+bool x::operator==(unsigned int const& left_uint, barray const& right_barray) noexcept
+{
+	return right_barray == left_uint;
+}
+
 bool x::barray::operator==(long long const& right_long) const noexcept
 {
 	if (t != 8)
@@ -1050,6 +1086,11 @@ bool x::barray::operator==(long long const& right_long) const noexcept
 		if (ba[i] != unsigned char(right_long >> i * 8))
 			return false;
 	return true;
+}
+
+bool x::operator==(long long const& left_long, barray const& right_barray) noexcept
+{
+	return right_barray == left_long;
 }
 
 bool x::barray::operator==(unsigned long long const& right_ulong) const noexcept
@@ -1062,13 +1103,16 @@ bool x::barray::operator==(unsigned long long const& right_ulong) const noexcept
 	return true;
 }
 
+bool x::operator==(unsigned long long const& left_ulong, barray const& right_barray) noexcept
+{
+	return right_barray == left_ulong;
+}
+
 // ----- operator!=重载 -----
 bool x::barray::operator!=(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.t)
 		return true;
-	if (t == 0)
-		return false;
 	for (int i = 0; i < t; ++i)
 		if (ba[i] != right_barray.ba[i])
 			return true;
@@ -1079,12 +1123,15 @@ bool x::barray::operator!=(std::string const& right_string) const noexcept
 {
 	if (t != right_string.length())
 		return true;
-	if (t == 0)
-		return false;
 	for (int i = 0; i < t; ++i)
-		if (ba[i] != right_string[i])
+		if (ba[i] != unsigned char(right_string[i]))
 			return true;
 	return false;
+}
+
+bool x::operator!=(std::string const& left_string, barray const& right_barray) noexcept
+{
+	return right_barray != left_string;
 }
 
 bool x::barray::operator!=(char const& right_char) const noexcept
@@ -1096,6 +1143,11 @@ bool x::barray::operator!=(char const& right_char) const noexcept
 	return false;
 }
 
+bool x::operator!=(char const& left_char, barray const& right_barray) noexcept
+{
+	return right_barray != left_char;
+}
+
 bool x::barray::operator!=(unsigned char const& right_uchar) const noexcept
 {
 	if (t != 1)
@@ -1103,6 +1155,11 @@ bool x::barray::operator!=(unsigned char const& right_uchar) const noexcept
 	if (ba[0] != right_uchar)
 		return true;
 	return false;
+}
+
+bool x::operator!=(unsigned char const& left_uchar, barray const& right_barray) noexcept
+{
+	return right_barray != left_uchar;
 }
 
 bool x::barray::operator!=(bool const& right_bool) const noexcept
@@ -1116,6 +1173,11 @@ bool x::barray::operator!=(bool const& right_bool) const noexcept
 	return false;
 }
 
+bool x::operator!=(bool const& left_bool, barray const& right_barray) noexcept
+{
+	return right_barray != left_bool;
+}
+
 bool x::barray::operator!=(short const& right_short) const noexcept
 {
 	if (t != 2)
@@ -1124,6 +1186,11 @@ bool x::barray::operator!=(short const& right_short) const noexcept
 		if (ba[i] != unsigned char(right_short >> i * 8))
 			return true;
 	return false;
+}
+
+bool x::operator!=(short const& left_short, barray const& right_barray) noexcept
+{
+	return right_barray != left_short;
 }
 
 bool x::barray::operator!=(unsigned short const& right_ushort) const noexcept
@@ -1136,6 +1203,11 @@ bool x::barray::operator!=(unsigned short const& right_ushort) const noexcept
 	return false;
 }
 
+bool x::operator!=(unsigned short const& left_ushort, barray const& right_barray) noexcept
+{
+	return right_barray != left_ushort;
+}
+
 bool x::barray::operator!=(int const& right_int) const noexcept
 {
 	if (t != 4)
@@ -1144,6 +1216,11 @@ bool x::barray::operator!=(int const& right_int) const noexcept
 		if (ba[i] != unsigned char(right_int >> i * 8))
 			return true;
 	return false;
+}
+
+bool x::operator!=(int const& left_int, barray const& right_barray) noexcept
+{
+	return right_barray != left_int;
 }
 
 bool x::barray::operator!=(unsigned int const& right_uint) const noexcept
@@ -1156,6 +1233,11 @@ bool x::barray::operator!=(unsigned int const& right_uint) const noexcept
 	return false;
 }
 
+bool x::operator!=(unsigned int const& left_uint, barray const& right_barray) noexcept
+{
+	return right_barray != left_uint;
+}
+
 bool x::barray::operator!=(long long const& right_long) const noexcept
 {
 	if (t != 8)
@@ -1166,6 +1248,11 @@ bool x::barray::operator!=(long long const& right_long) const noexcept
 	return false;
 }
 
+bool x::operator!=(long long const& left_long, barray const& right_barray) noexcept
+{
+	return right_barray != left_long;
+}
+
 bool x::barray::operator!=(unsigned long long const& right_ulong) const noexcept
 {
 	if (t != 8)
@@ -1174,6 +1261,11 @@ bool x::barray::operator!=(unsigned long long const& right_ulong) const noexcept
 		if (ba[i] != unsigned char(right_ulong >> i * 8))
 			return true;
 	return false;
+}
+
+bool x::operator!=(unsigned long long const& left_ulong, barray const& right_barray) noexcept
+{
+	return right_barray != left_ulong;
 }
 
 // ----- operator+重载 -----
@@ -3163,8 +3255,6 @@ bool x::barray_long::operator==(barray_long const& right_barray_long) const noex
 {
 	if (t != right_barray_long.t)
 		return false;
-	if (t == 0)
-		return true;
 	for (long long i = 0; i < t; ++i)
 		if (ba[i] != right_barray_long.ba[i])
 			return false;
@@ -3175,8 +3265,6 @@ bool x::barray_long::operator==(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.get_length())
 		return false;
-	if (t == 0)
-		return true;
 	for (int i = 0; i < t; ++i)
 		if (ba[i] != right_barray[i])
 			return false;
@@ -3185,14 +3273,24 @@ bool x::barray_long::operator==(barray const& right_barray) const noexcept
 
 bool x::operator==(barray const& left_barray, barray_long const& right_barray_long) noexcept
 {
-	if (right_barray_long.t != left_barray.get_length())
+	return right_barray_long == left_barray;
+}
+
+bool x::barray_long::operator==(std::string const& right_string) const noexcept
+{
+	if (t != right_string.length())
 		return false;
-	if (right_barray_long.t == 0)
+	if (t == 0)
 		return true;
-	for (int i = 0; i < right_barray_long.t; ++i)
-		if (right_barray_long.ba[i] != left_barray[i])
+	for (long long i = 0; i < t; ++i)
+		if (ba[i] != unsigned char(right_string[i]))
 			return false;
 	return true;
+}
+
+bool x::operator==(std::string const& left_string, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_string;
 }
 
 bool x::barray_long::operator==(char const& right_char) const noexcept
@@ -3204,6 +3302,11 @@ bool x::barray_long::operator==(char const& right_char) const noexcept
 	return true;
 }
 
+bool x::operator==(char const& left_char, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_char;
+}
+
 bool x::barray_long::operator==(unsigned char const& right_uchar) const noexcept
 {
 	if (t != 1)
@@ -3211,6 +3314,11 @@ bool x::barray_long::operator==(unsigned char const& right_uchar) const noexcept
 	if (ba[0] != right_uchar)
 		return false;
 	return true;
+}
+
+bool x::operator==(unsigned char const& left_uchar, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_uchar;
 }
 
 bool x::barray_long::operator==(bool const& right_bool) const noexcept
@@ -3224,6 +3332,11 @@ bool x::barray_long::operator==(bool const& right_bool) const noexcept
 	return true;
 }
 
+bool x::operator==(bool const& left_bool, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_bool;
+}
+
 bool x::barray_long::operator==(short const& right_short) const noexcept
 {
 	if (t != 2)
@@ -3232,6 +3345,11 @@ bool x::barray_long::operator==(short const& right_short) const noexcept
 		if (ba[i] != unsigned char(right_short >> i * 8))
 			return false;
 	return true;
+}
+
+bool x::operator==(short const& left_short, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_short;
 }
 
 bool x::barray_long::operator==(unsigned short const& right_ushort) const noexcept
@@ -3244,6 +3362,11 @@ bool x::barray_long::operator==(unsigned short const& right_ushort) const noexce
 	return true;
 }
 
+bool x::operator==(unsigned short const& left_ushort, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_ushort;
+}
+
 bool x::barray_long::operator==(int const& right_int) const noexcept
 {
 	if (t != 4)
@@ -3252,6 +3375,11 @@ bool x::barray_long::operator==(int const& right_int) const noexcept
 		if (ba[i] != unsigned char(right_int >> i * 8))
 			return false;
 	return true;
+}
+
+bool x::operator==(int const& left_int, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_int;
 }
 
 bool x::barray_long::operator==(unsigned int const& right_uint) const noexcept
@@ -3264,6 +3392,11 @@ bool x::barray_long::operator==(unsigned int const& right_uint) const noexcept
 	return true;
 }
 
+bool x::operator==(unsigned int const& left_uint, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_uint;
+}
+
 bool x::barray_long::operator==(long long const& right_long) const noexcept
 {
 	if (t != 8)
@@ -3272,6 +3405,11 @@ bool x::barray_long::operator==(long long const& right_long) const noexcept
 		if (ba[i] != unsigned char(right_long >> i * 8))
 			return false;
 	return true;
+}
+
+bool x::operator==(long long const& left_long, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_long;
 }
 
 bool x::barray_long::operator==(unsigned long long const& right_ulong) const noexcept
@@ -3284,13 +3422,16 @@ bool x::barray_long::operator==(unsigned long long const& right_ulong) const noe
 	return true;
 }
 
+bool x::operator==(unsigned long long const& left_ulong, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long == left_ulong;
+}
+
 // ----- operator!=重载 -----
 bool x::barray_long::operator!=(barray_long const& right_barray_long) const noexcept
 {
 	if (t != right_barray_long.t)
 		return true;
-	if (t == 0)
-		return false;
 	for (long long i = 0; i < t; ++i)
 		if (ba[i] != right_barray_long.ba[i])
 			return true;
@@ -3301,8 +3442,6 @@ bool x::barray_long::operator!=(barray const& right_barray) const noexcept
 {
 	if (t != right_barray.get_length())
 		return true;
-	if (t == 0)
-		return false;
 	for (int i = 0; i < t; ++i)
 		if (ba[i] != right_barray.get_length())
 			return true;
@@ -3311,14 +3450,22 @@ bool x::barray_long::operator!=(barray const& right_barray) const noexcept
 
 bool x::operator!=(barray const& left_barray, barray_long const& right_barray_long) noexcept
 {
-	if (right_barray_long.t != left_barray.get_length())
+	return right_barray_long != left_barray;
+}
+
+bool x::barray_long::operator!=(std::string const& right_string) const noexcept
+{
+	if (t != right_string.length())
 		return true;
-	if (right_barray_long.t == 0)
-		return false;
-	for (int i = 0; i < right_barray_long.t; ++i)
-		if (right_barray_long.ba[i] != left_barray[i])
+	for (long long i = 0; i < t; ++i)
+		if (ba[i] != unsigned char(right_string[i]))
 			return true;
 	return false;
+}
+
+bool x::operator!=(std::string const& left_string, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_string;
 }
 
 bool x::barray_long::operator!=(char const& right_char) const noexcept
@@ -3330,6 +3477,11 @@ bool x::barray_long::operator!=(char const& right_char) const noexcept
 	return false;
 }
 
+bool x::operator!=(char const& left_char, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_char;
+}
+
 bool x::barray_long::operator!=(unsigned char const& right_uchar) const noexcept
 {
 	if (t != 1)
@@ -3337,6 +3489,11 @@ bool x::barray_long::operator!=(unsigned char const& right_uchar) const noexcept
 	if (ba[0] != right_uchar)
 		return true;
 	return false;
+}
+
+bool x::operator!=(unsigned char const& left_uchar, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_uchar;
 }
 
 bool x::barray_long::operator!=(bool const& right_bool) const noexcept
@@ -3350,6 +3507,11 @@ bool x::barray_long::operator!=(bool const& right_bool) const noexcept
 	return false;
 }
 
+bool x::operator!=(bool const& left_bool, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_bool;
+}
+
 bool x::barray_long::operator!=(short const& right_short) const noexcept
 {
 	if (t != 2)
@@ -3358,6 +3520,11 @@ bool x::barray_long::operator!=(short const& right_short) const noexcept
 		if (ba[i] != unsigned char(right_short >> i * 8))
 			return true;
 	return false;
+}
+
+bool x::operator!=(short const& left_short, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_short;
 }
 
 bool x::barray_long::operator!=(unsigned short const& right_ushort) const noexcept
@@ -3370,6 +3537,11 @@ bool x::barray_long::operator!=(unsigned short const& right_ushort) const noexce
 	return false;
 }
 
+bool x::operator!=(unsigned short const& left_ushort, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_ushort;
+}
+
 bool x::barray_long::operator!=(int const& right_int) const noexcept
 {
 	if (t != 4)
@@ -3378,6 +3550,11 @@ bool x::barray_long::operator!=(int const& right_int) const noexcept
 		if (ba[i] != unsigned char(right_int >> i * 8))
 			return true;
 	return false;
+}
+
+bool x::operator!=(int const& left_int, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_int;
 }
 
 bool x::barray_long::operator!=(unsigned int const& right_uint) const noexcept
@@ -3390,6 +3567,11 @@ bool x::barray_long::operator!=(unsigned int const& right_uint) const noexcept
 	return false;
 }
 
+bool x::operator!=(unsigned int const& left_uint, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_uint;
+}
+
 bool x::barray_long::operator!=(long long const& right_long) const noexcept
 {
 	if (t != 8)
@@ -3400,6 +3582,11 @@ bool x::barray_long::operator!=(long long const& right_long) const noexcept
 	return false;
 }
 
+bool x::operator!=(long long const& left_long, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_long;
+}
+
 bool x::barray_long::operator!=(unsigned long long const& right_ulong) const noexcept
 {
 	if (t != 8)
@@ -3408,6 +3595,11 @@ bool x::barray_long::operator!=(unsigned long long const& right_ulong) const noe
 		if (ba[i] != unsigned char(right_ulong >> i * 8))
 			return true;
 	return false;
+}
+
+bool x::operator!=(unsigned long long const& left_ulong, barray_long const& right_barray_long) noexcept
+{
+	return right_barray_long != left_ulong;
 }
 
 // ----- operator+重载 -----
@@ -3495,6 +3687,35 @@ x::barray_long x::operator+(barray const& left_barray, barray_long const& right_
 		a.ba[i] = left_barray[i];
 	for (; i < a.t; ++i)
 		a.ba[i] = right_barray_long.ba[i - left_barray.get_length()];
+	return a;
+}
+
+x::barray_long x::barray_long::operator+(std::string const& right_string) const
+{
+	if (t == 0)
+		return barray(right_string);
+	if (right_string.length() == 0)
+		return *this;
+	barray_long a;
+	if (right_string.length() > LLONG_MAX - t)
+		a.t = LLONG_MAX;
+	else
+		a.t = t + right_string.length();
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	long long i;
+	for (i = 0; i < t; ++i)
+		a.ba[i] = ba[i];
+	for (; i < a.t; ++i)
+		a.ba[i] = right_string[i - t];
 	return a;
 }
 
@@ -3810,6 +4031,37 @@ x::barray_long& x::barray_long::operator+=(barray const& right_barray)
 		ba[i] = a.ba[i];
 	for (; i < t; ++i)
 		ba[i] = right_barray[i - a.t];
+	return *this;
+}
+
+x::barray_long& x::barray_long::operator+=(std::string const& right_string)
+{
+	if (t == 0)
+		return *this = right_string;
+	if (right_string.length() == 0)
+		return *this;
+	barray_long a;
+	a.ba = ba;
+	a.t = t;
+	if (a.t > LLONG_MAX - right_string.length())
+		t = LLONG_MAX;
+	else
+		t = a.t + right_string.length();
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	long long i;
+	for (i = 0; i < a.t; ++i)
+		ba[i] = a.ba[i];
+	for (; i < t; ++i)
+		ba[i] = right_string[i - a.t];
 	return *this;
 }
 
