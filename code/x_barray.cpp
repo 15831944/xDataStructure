@@ -679,6 +679,41 @@ x::barray& x::barray::operator=(barray const& right_barray)
 	return *this;
 }
 
+x::barray& x::barray::operator=(std::string const& right_string)
+{
+	if (right_string.length() == t)
+	{
+		for (int i = 0; i < t; ++i)
+			ba[i] = right_string[i];
+		return *this;
+	}
+	if (t > 0)
+		delete[] ba;
+	if (right_string.length() == 0)
+	{
+		ba = 0x00;
+		t = 0;
+		return *this;
+	}
+	if (right_string.length() > INT_MAX)
+		t = INT_MAX;
+	else
+		t = right_string.length();
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	for (int i = 0; i < t; ++i)
+		ba[i] = right_string[i];
+	return *this;
+}
+
 x::barray& x::barray::operator=(char const& right_char)
 {
 	if (t > 1)
@@ -926,6 +961,18 @@ bool x::barray::operator==(barray const& right_barray) const noexcept
 	return true;
 }
 
+bool x::barray::operator==(std::string const& right_string) const noexcept
+{
+	if (t != right_string.length())
+		return false;
+	if (t == 0)
+		return true;
+	for (int i = 0; i < t; ++i)
+		if (ba[i] != right_string[i])
+			return false;
+	return true;
+}
+
 bool x::barray::operator==(char const& right_char) const noexcept
 {
 	if (t != 1)
@@ -1024,6 +1071,18 @@ bool x::barray::operator!=(barray const& right_barray) const noexcept
 		return false;
 	for (int i = 0; i < t; ++i)
 		if (ba[i] != right_barray.ba[i])
+			return true;
+	return false;
+}
+
+bool x::barray::operator!=(std::string const& right_string) const noexcept
+{
+	if (t != right_string.length())
+		return true;
+	if (t == 0)
+		return false;
+	for (int i = 0; i < t; ++i)
+		if (ba[i] != right_string[i])
 			return true;
 	return false;
 }
@@ -1144,6 +1203,35 @@ x::barray x::barray::operator+(barray const& right_barray) const
 		a.ba[i] = ba[i];
 	for (; i < a.t; ++i)
 		a.ba[i] = right_barray.ba[i - t];
+	return a;
+}
+
+x::barray x::barray::operator+(std::string const& right_string) const
+{
+	if (t == 0)
+		return barray(right_string);
+	if (right_string.length() == 0)
+		return *this;
+	barray a;
+	if (right_string.length() > INT_MAX - t)
+		a.t = INT_MAX;
+	else
+		a.t = t + right_string.length();
+	try
+	{
+		a.ba = new unsigned char[a.t];
+	}
+	catch (std::exception& e)
+	{
+		a.t = 0;
+		a.ba = 0x00;
+		throw(e);
+	}
+	int i;
+	for (i = 0; i < t; ++i)
+		a.ba[i] = ba[i];
+	for (; i < a.t; ++i)
+		a.ba[i] = right_string[i - t];
 	return a;
 }
 
@@ -1428,6 +1516,37 @@ x::barray& x::barray::operator+=(barray const& right_barray)
 		ba[i] = a.ba[i];
 	for (; i < t; ++i)
 		ba[i] = right_barray.ba[i - a.t];
+	return *this;
+}
+
+x::barray& x::barray::operator+=(std::string const& right_string)
+{
+	if (t == 0)
+		return *this = right_string;
+	if (right_string.length() == 0)
+		return *this;
+	barray a;
+	a.ba = ba;
+	a.t = t;
+	if (a.t > INT_MAX - right_string.length())
+		t = INT_MAX;
+	else
+		t = a.t + right_string.length();
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	int i;
+	for (i = 0; i < a.t; ++i)
+		ba[i] = a.ba[i];
+	for (; i < t; ++i)
+		ba[i] = right_string[i - a.t];
 	return *this;
 }
 
@@ -2767,6 +2886,41 @@ x::barray_long& x::barray_long::operator=(barray const& right_barray)
 	}
 	for (long long i = 0; i < t; ++i)
 		ba[i] = right_barray[i];
+	return *this;
+}
+
+x::barray_long& x::barray_long::operator=(std::string const& right_string)
+{
+	if (right_string.length() == t)
+	{
+		for (long long i = 0; i < t; ++i)
+			ba[i] = right_string[i];
+		return *this;
+	}
+	if (t > 0)
+		delete[] ba;
+	if (right_string.length() == 0)
+	{
+		ba = 0x00;
+		t = 0;
+		return *this;
+	}
+	if (right_string.length() > LLONG_MAX)
+		t = LLONG_MAX;
+	else
+		t = right_string.length();
+	try
+	{
+		ba = new unsigned char[t];
+	}
+	catch (std::exception& e)
+	{
+		t = 0;
+		ba = 0x00;
+		throw(e);
+	}
+	for (long long i = 0; i < t; ++i)
+		ba[i] = right_string[i];
 	return *this;
 }
 

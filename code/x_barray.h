@@ -53,6 +53,7 @@ namespace x
 
 		// ----- operator=重载 -----
 		barray& operator=(barray const& right_barray);
+		barray& operator=(std::string const& right_string);  // 把barray用一个string赋值，barray长度为string的长度，参考用string初始化的构造函数
 		barray& operator=(char const& right_char);  // 把barray用一个char赋值，barray长度为1，参考用char数组初始化的构造函数
 		barray& operator=(unsigned char const& right_uchar);
 		barray& operator=(bool const& right_bool);  // 把barray用一个bool赋值，barray长度为1，参考用bool数组初始化的构造函数
@@ -65,6 +66,7 @@ namespace x
 
 		// ----- operator==重载 -----
 		bool operator==(barray const& right_barray) const noexcept;
+		bool operator==(std::string const& right_string) const noexcept;
 		bool operator==(char const& right_char) const noexcept;
 		bool operator==(unsigned char const& right_uchar) const noexcept;
 		bool operator==(bool const& right_bool) const noexcept;
@@ -77,6 +79,7 @@ namespace x
 
 		// ----- operator!=重载 -----
 		bool operator!=(barray const& right_barray) const noexcept;
+		bool operator!=(std::string const& right_string) const noexcept;
 		bool operator!=(char const& right_char) const noexcept;
 		bool operator!=(unsigned char const& right_uchar) const noexcept;
 		bool operator!=(bool const& right_bool) const noexcept;
@@ -89,6 +92,7 @@ namespace x
 
 		// ----- operator+重载 -----
 		barray operator+(barray const& right_barray) const;  // 若长度超过INT_MAX，只返回到INT_MAX的长度
+		barray operator+(std::string const& right_string) const;  // 若长度超过INT_MAX，只返回到INT_MAX的长度
 		barray operator+(char const& right_char) const;  // barray往后加1个位置，且值为char，参考用char数组初始化的构造函数
 		barray operator+(unsigned char const& right_uchar) const;
 		barray operator+(bool const& right_bool) const;  // barray往后加1个位置，且值为0或1，参考用char数组初始化的构造函数
@@ -101,6 +105,7 @@ namespace x
 		
 		// ----- operator+=重载 -----
 		barray& operator+=(barray const& right_barray);
+		barray& operator+=(std::string const& right_string);
 		barray& operator+=(char const& right_char);
 		barray& operator+=(unsigned char const& right_uchar);
 		barray& operator+=(bool const& right_bool);
@@ -146,7 +151,6 @@ namespace x
 
 
 
-	// ********** 以下的未经过测试 ********** //
 	// barry_long 二进制数组，unsigned char数组。长度最长为9223372036854775807(2^63-1 or 0x7FFFFFFFFFFFFFFF)
 	class barray_long
 	{
@@ -196,6 +200,7 @@ namespace x
 		// ----- operator=重载 -----
 		barray_long& operator=(barray_long const& right_barray_long);
 		barray_long& operator=(barray const& right_barray);
+		barray_long& operator=(std::string const& right_string);
 		barray_long& operator=(char const& right_char);  // 把barray_long用一个char赋值，barray_long长度为1，参考用char数组初始化的构造函数
 		barray_long& operator=(unsigned char const& right_uchar);
 		barray_long& operator=(bool const& right_bool);  // 把barray_long用一个bool赋值，barray_long长度为1，参考用bool数组初始化的构造函数
@@ -210,6 +215,7 @@ namespace x
 		bool operator==(barray_long const& right_barray_long) const noexcept;
 		bool operator==(barray const& right_barray) const noexcept;
 		friend bool operator==(barray const& left_barray, barray_long const& right_barray_long) noexcept;
+		bool operator==(std::string const& right_string) const noexcept;
 		bool operator==(char const& right_char) const noexcept;
 		bool operator==(unsigned char const& right_uchar) const noexcept;
 		bool operator==(bool const& right_bool) const noexcept;
@@ -224,6 +230,7 @@ namespace x
 		bool operator!=(barray_long const& right_barray_long) const noexcept;
 		bool operator!=(barray const& right_barray) const noexcept;
 		friend bool operator!=(barray const& left_barray, barray_long const& right_barray_long) noexcept;
+		bool operator!=(std::string const& right_string) const noexcept;
 		bool operator!=(char const& right_char) const noexcept;
 		bool operator!=(unsigned char const& right_uchar) const noexcept;
 		bool operator!=(bool const& right_bool) const noexcept;
@@ -238,6 +245,7 @@ namespace x
 		barray_long operator+(barray_long const& right_barray_long) const;  // 若长度超过LLONG_MAX，只返回到LLONG_MAX的长度
 		barray_long operator+(barray const& right_barray) const;
 		friend barray_long operator+(barray const& left_barray, barray_long const& right_barray_long);
+		barray_long operator+(std::string const& right_string);  // 若长度超过LLONG_MAX，只返回到LLONG_MAX的长度
 		barray_long operator+(char const& right_char) const;  // barray_long往后加1个位置，且值为char，参考用char数组初始化的构造函数
 		barray_long operator+(unsigned char const& right_uchar) const;
 		barray_long operator+(bool const& right_bool) const;  // barray_long往后加1个位置，且值为0或1，参考用char数组初始化的构造函数
@@ -251,6 +259,7 @@ namespace x
 		// ----- operator+=重载 -----
 		barray_long& operator+=(barray_long const& right_barray_long);
 		barray_long& operator+=(barray const& right_barray);
+		barray_long& operator+=(std::string const& right_string);
 		barray_long& operator+=(char const& right_char);
 		barray_long& operator+=(unsigned char const& right_uchar);
 		barray_long& operator+=(bool const& right_bool);
