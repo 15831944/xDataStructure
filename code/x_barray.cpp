@@ -113,7 +113,7 @@ x::barray::barray(char const* const origin_char, int const& origin_char_len)
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -146,7 +146,7 @@ x::barray::barray(unsigned char const* const origin_uchar, int const& origin_uch
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -182,7 +182,7 @@ x::barray::barray(bool const* const origin_bool, int const& origin_bool_len)
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -220,7 +220,7 @@ x::barray::barray(short const* const origin_short, int const& origin_short_len)
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -258,7 +258,7 @@ x::barray::barray(unsigned short const* const origin_ushort, int const& origin_u
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -296,7 +296,7 @@ x::barray::barray(int const* const origin_int, int const& origin_int_len)
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -334,7 +334,7 @@ x::barray::barray(unsigned int const* const origin_uint, int const& origin_uint_
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -372,7 +372,7 @@ x::barray::barray(long long const* const origin_long, int const& origin_long_len
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -410,7 +410,7 @@ x::barray::barray(unsigned long long const* const origin_ulong, int const& origi
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -601,12 +601,12 @@ bool x::barray::set_length(int const& array_length, unsigned char const& value)
 	}
 	else if (array_length == 0)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		return true;
 	}
-	delete[]ba;
+	delete[] ba;
 	t = array_length;
 	try
 	{
@@ -632,7 +632,7 @@ void x::barray::clear() noexcept
 {
 	if (t != 0)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 	}
@@ -653,7 +653,7 @@ x::barray& x::barray::operator=(barray const& right_barray)
 	if (this == &right_barray)
 		return *this;
 	if (t != 0 && t != right_barray.t)
-		delete[]ba;
+		delete[] ba;
 	if (right_barray.t == 0)
 	{
 		t = 0;
@@ -717,7 +717,7 @@ x::barray& x::barray::operator=(std::string const& right_string)
 x::barray& x::barray::operator=(char const& right_char)
 {
 	if (t > 1)
-		delete[]ba;
+		delete[] ba;
 	if (t == 1)
 	{
 		ba[0] = right_char;
@@ -741,7 +741,7 @@ x::barray& x::barray::operator=(char const& right_char)
 x::barray& x::barray::operator=(unsigned char const& right_uchar)
 {
 	if (t > 1)
-		delete[]ba;
+		delete[] ba;
 	if (t == 1)
 	{
 		ba[0] = right_uchar;
@@ -765,7 +765,7 @@ x::barray& x::barray::operator=(unsigned char const& right_uchar)
 x::barray& x::barray::operator=(bool const& right_bool)
 {
 	if (t > 1)
-		delete[]ba;
+		delete[] ba;
 	if (t == 1)
 	{
 		if (right_bool)
@@ -795,7 +795,7 @@ x::barray& x::barray::operator=(bool const& right_bool)
 x::barray& x::barray::operator=(short const& right_short)
 {
 	if (t != 2 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 2)
 	{
 		for (int i = 0; i < 2; ++i)
@@ -821,7 +821,7 @@ x::barray& x::barray::operator=(short const& right_short)
 x::barray& x::barray::operator=(unsigned short const& right_ushort)
 {
 	if (t != 2 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 2)
 	{
 		for (int i = 0; i < 2; ++i)
@@ -847,7 +847,7 @@ x::barray& x::barray::operator=(unsigned short const& right_ushort)
 x::barray& x::barray::operator=(int const& right_int)
 {
 	if (t != 4 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 4)
 	{
 		for (int i = 0; i < 4; ++i)
@@ -873,7 +873,7 @@ x::barray& x::barray::operator=(int const& right_int)
 x::barray& x::barray::operator=(unsigned int const& right_uint)
 {
 	if (t != 4 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 4)
 	{
 		for (int i = 0; i < 4; ++i)
@@ -899,7 +899,7 @@ x::barray& x::barray::operator=(unsigned int const& right_uint)
 x::barray& x::barray::operator=(long long const& right_long)
 {
 	if (t != 8 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 8)
 	{
 		for (int i = 0; i < 8; ++i)
@@ -925,7 +925,7 @@ x::barray& x::barray::operator=(long long const& right_long)
 x::barray& x::barray::operator=(unsigned long long const& right_ulong)
 {
 	if (t != 8 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 8)
 	{
 		for (int i = 0; i < 8; ++i)
@@ -1972,7 +1972,7 @@ x::barray& x::barray::operator*=(int const& multiple)
 		return *this;
 	if (multiple <= 0)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		return *this;
@@ -2380,7 +2380,7 @@ x::barray_long::barray_long(char const* const origin_char, long long const& orig
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2413,7 +2413,7 @@ x::barray_long::barray_long(unsigned char const* const origin_uchar, long long c
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2449,7 +2449,7 @@ x::barray_long::barray_long(bool const* const origin_bool, long long const& orig
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2488,7 +2488,7 @@ x::barray_long::barray_long(short const* const origin_short, long long const& or
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2527,7 +2527,7 @@ x::barray_long::barray_long(unsigned short const* const origin_ushort, long long
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2566,7 +2566,7 @@ x::barray_long::barray_long(int const* const origin_int, long long const& origin
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2605,7 +2605,7 @@ x::barray_long::barray_long(unsigned int const* const origin_uint, long long con
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2644,7 +2644,7 @@ x::barray_long::barray_long(long long const* const origin_long, long long const&
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2683,7 +2683,7 @@ x::barray_long::barray_long(unsigned long long const* const origin_ulong, long l
 	}
 	catch (std::exception &e)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		throw(e);
@@ -2874,12 +2874,12 @@ bool x::barray_long::set_length(long long const& array_length, unsigned char con
 	}
 	else if (array_length == 0)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		return true;
 	}
-	delete[]ba;
+	delete[] ba;
 	t = array_length;
 	try
 	{
@@ -2905,7 +2905,7 @@ void x::barray_long::clear() noexcept
 {
 	if (t != 0)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 	}
@@ -2926,7 +2926,7 @@ x::barray_long& x::barray_long::operator=(barray_long const& right_barray_long)
 	if (this == &right_barray_long)
 		return *this;
 	if (t != 0 && t != right_barray_long.t)
-		delete[]ba;
+		delete[] ba;
 	if (right_barray_long.t == 0)
 	{
 		t = 0;
@@ -2955,7 +2955,7 @@ x::barray_long& x::barray_long::operator=(barray_long const& right_barray_long)
 x::barray_long& x::barray_long::operator=(barray const& right_barray)
 {
 	if (t != 0 && t != right_barray.get_length())
-		delete[]ba;
+		delete[] ba;
 	if (right_barray.get_length() == 0)
 	{
 		t = 0;
@@ -3019,7 +3019,7 @@ x::barray_long& x::barray_long::operator=(std::string const& right_string)
 x::barray_long& x::barray_long::operator=(char const& right_char)
 {
 	if (t > 1)
-		delete[]ba;
+		delete[] ba;
 	if (t == 1)
 	{
 		ba[0] = right_char;
@@ -3043,7 +3043,7 @@ x::barray_long& x::barray_long::operator=(char const& right_char)
 x::barray_long& x::barray_long::operator=(unsigned char const& right_uchar)
 {
 	if (t > 1)
-		delete[]ba;
+		delete[] ba;
 	if (t == 1)
 	{
 		ba[0] = right_uchar;
@@ -3067,7 +3067,7 @@ x::barray_long& x::barray_long::operator=(unsigned char const& right_uchar)
 x::barray_long& x::barray_long::operator=(bool const& right_bool)
 {
 	if (t > 1)
-		delete[]ba;
+		delete[] ba;
 	if (t == 1)
 	{
 		if (right_bool)
@@ -3097,7 +3097,7 @@ x::barray_long& x::barray_long::operator=(bool const& right_bool)
 x::barray_long& x::barray_long::operator=(short const& right_short)
 {
 	if (t != 2 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 2)
 	{
 		for (long long i = 0; i < 2; ++i)
@@ -3123,7 +3123,7 @@ x::barray_long& x::barray_long::operator=(short const& right_short)
 x::barray_long& x::barray_long::operator=(unsigned short const& right_ushort)
 {
 	if (t != 2 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 2)
 	{
 		for (long long i = 0; i < 2; ++i)
@@ -3149,7 +3149,7 @@ x::barray_long& x::barray_long::operator=(unsigned short const& right_ushort)
 x::barray_long& x::barray_long::operator=(int const& right_int)
 {
 	if (t != 4 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 4)
 	{
 		for (long long i = 0; i < 4; ++i)
@@ -3175,7 +3175,7 @@ x::barray_long& x::barray_long::operator=(int const& right_int)
 x::barray_long& x::barray_long::operator=(unsigned int const& right_uint)
 {
 	if (t != 4 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 4)
 	{
 		for (long long i = 0; i < 4; ++i)
@@ -3201,7 +3201,7 @@ x::barray_long& x::barray_long::operator=(unsigned int const& right_uint)
 x::barray_long& x::barray_long::operator=(long long const& right_long)
 {
 	if (t != 8 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 8)
 	{
 		for (long long i = 0; i < 8; ++i)
@@ -3227,7 +3227,7 @@ x::barray_long& x::barray_long::operator=(long long const& right_long)
 x::barray_long& x::barray_long::operator=(unsigned long long const& right_ulong)
 {
 	if (t != 8 && t > 0)
-		delete[]ba;
+		delete[] ba;
 	if (t == 8)
 	{
 		for (long long i = 0; i < 8; ++i)
@@ -4395,7 +4395,7 @@ x::barray_long& x::barray_long::operator*=(long long const& multiple)
 		return *this;
 	if (multiple <= 0)
 	{
-		delete[]ba;
+		delete[] ba;
 		t = 0;
 		ba = 0x00;
 		return *this;
