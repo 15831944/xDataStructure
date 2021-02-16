@@ -1,27 +1,54 @@
-#pragma once
+﻿#pragma once
 
 namespace x
 {
-	// ********** 以下的未经过测试 ********** //
-	// node 节点 有两个指针
-	template<class T>
+	// ********** node **********
+	// 节点。有两个指针
+	template<class TYPE>
 	class node
 	{
 	private:
-		T d;
-		node* ln, rn;
+		TYPE d;
+		node<TYPE>* ln;
+		node<TYPE>* rn;
+
 	public:
-		node();
-		node(const T& data, const node* const left_node = 0x00, const node* const right_node = 0x00);
-		~node();
+		// ---------- 构造、析构函数 ----------
+		node() noexcept;
+		node(TYPE const& data, node<TYPE>* const left_node = 0x00, node<TYPE>* const right_node = 0x00) noexcept;
+		~node() noexcept;
 
-		node* get_left() const;
-		node* get_right() const;
-		T get_data() const;
+		// ---------- 功能函数 ----------
+		node<TYPE>* get_left() const noexcept;
+		node<TYPE>* get_right() const noexcept;
+		TYPE get_data() const noexcept;
+		void set_data(TYPE const& data) noexcept;
+		void set_left(node<TYPE>* const left_node = 0x00) noexcept;
+		void set_right(node<TYPE>* const right_node = 0x00) noexcept;
+		bool is_equal(node<TYPE> const& other_node) const noexcept;  // 对数据和指针都进行判断
+		void copy(node<TYPE> const& other_node) noexcept;  // 完全赋值，包括数据和指针
 
-		void set_data(const T& data);
-		void set_left(const node* const left_node = 0x00);
-		void set_right(const node* const right_node = 0x00);
+		// ---------- 重载运算符 ----------
+		node<TYPE>& operator=(node<TYPE> const& right_node) noexcept;  // 只对数据进行赋值，不赋值指针
+		node<TYPE>& operator=(TYPE const& right_data) noexcept;  //  对数据进行赋值
+		bool operator==(node<TYPE> const& right_node) const noexcept;  // 只对数据进行判断
+		bool operator==(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator==(TYPE const& left_data, node<TYPE> const& right_node) noexcept;
+		bool operator!=(node<TYPE> const& right_node) const noexcept;  // 只对数据进行判断
+		bool operator!=(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator!=(TYPE const& left_data, node<TYPE> const& right_node) noexcept;
+		bool operator>(node<TYPE> const& right_node) const noexcept;  // 只对数据进行判断
+		bool operator>(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator>(TYPE const& left_data, node<TYPE> const& right_node) noexcept;
+		bool operator>=(node<TYPE> const& right_node) const noexcept;  // 只对数据进行判断
+		bool operator>=(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator>=(TYPE const& left_data, node<TYPE> const& right_node) noexcept;
+		bool operator<(node<TYPE> const& right_node) const noexcept;  // 只对数据进行判断
+		bool operator<(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator<(TYPE const& left_data, node<TYPE> const& right_node) noexcept;
+		bool operator<=(node<TYPE> const& right_node) const noexcept;  // 只对数据进行判断
+		bool operator<=(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator<=(TYPE const& left_data, node<TYPE> const& right_node) noexcept;
 	};
 
 
@@ -33,66 +60,200 @@ namespace x
 
 
 
-	// ---------- 开始 node 实现 ---------- //
-	template<class T>
-	node<T>::node()
+	// ********** node **********
+
+	// ---------- 构造、析构函数 ----------
+	template<class TYPE>
+	node<TYPE>::node() noexcept :ln(0x00), rn(0x00)
+	{}
+
+	template<class TYPE>
+	node<TYPE>::node(TYPE const& data, node<TYPE>* const left_node, node<TYPE>* const right_node) noexcept :d(data), ln(left_node), rn(right_node)
+	{}
+
+	template<class TYPE>
+	node<TYPE>::~node() noexcept
 	{
 		ln = 0x00;
 		rn = 0x00;
 	}
 
-	template<class T>
-	node<T>::node(const T& data, const node* const left_node, const node* const right_node)
-	{
-		d = data;
-		ln = left_node;
-		rn = right_node;
-	}
-
-	template<class T>
-	node<T>::~node()
-	{
-		ln = 0x00;
-		rn = 0x00;
-	}
-
-	template<class T>
-	node<T>* node<T>::get_left() const
+	// ---------- 功能函数 ----------
+	template<class TYPE>
+	node<TYPE>* node<TYPE>::get_left() const noexcept
 	{
 		return ln;
 	}
 
-	template<class T>
-	node<T>* node<T>::get_right() const
+	template<class TYPE>
+	node<TYPE>* node<TYPE>::get_right() const noexcept
 	{
 		return rn;
 	}
 
-	template<class T>
-	T node<T>::get_data() const
+	template<class TYPE>
+	TYPE node<TYPE>::get_data() const noexcept
 	{
 		return d;
 	}
 
-	template<class T>
-	void node<T>::set_data(const T& data)
+	template<class TYPE>
+	void node<TYPE>::set_data(TYPE const& data) noexcept
 	{
 		d = data;
 	}
 
-	template<class T>
-	void node<T>::set_left(const node* const left_node)
+	template<class TYPE>
+	void node<TYPE>::set_left(node<TYPE>* const left_node) noexcept
 	{
 		ln = left_node;
 	}
 
-	template<class T>
-	void node<T>::set_right(const node* const right_node)
+	template<class TYPE>
+	void node<TYPE>::set_right(node<TYPE>* const right_node) noexcept
 	{
 		rn = right_node;
 	}
 
-	// ---------- 结束 node 实现 ---------- //
+
+	template<class TYPE>
+	bool node<TYPE>::is_equal(node<TYPE> const& other_node) const noexcept
+	{
+		if (d != other_node.d || ln != other_node.ln || rn != other_node.rn)
+			return false;
+		return true;
+	}
+
+	template<class TYPE>
+	void node<TYPE>::copy(node<TYPE> const& other_node) noexcept
+	{
+		d = other_node.d;
+		ln = other_node.ln;
+		rn = other_node.rn;
+	}
+
+	// ---------- 重载运算符 ----------
+	template<class TYPE>
+	node<TYPE>& node<TYPE>::operator=(node<TYPE> const& right_node) noexcept
+	{
+		d = right_node.d;
+		return *this;
+	}
+
+	template<class TYPE>
+	node<TYPE>& node<TYPE>::operator=(TYPE const& right_data) noexcept
+	{
+		d = right_data;
+		return *this;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator==(node<TYPE> const& right_node) const noexcept
+	{
+		return d == right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator==(TYPE const& right_data) const noexcept
+	{
+		return d == right_data;
+	}
+
+	template<class TYPE>
+	bool operator==(TYPE const& left_data, node<TYPE> const& right_node) noexcept
+	{
+		return left_data == right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator!=(node<TYPE> const& right_node) const noexcept
+	{
+		return d != right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator!=(TYPE const& right_data) const noexcept
+	{
+		return d != right_data;
+	}
+
+	template<class TYPE>
+	bool operator!=(TYPE const& left_data, node<TYPE> const& right_node) noexcept
+	{
+		return left_data != right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator>(node<TYPE> const& right_node) const noexcept
+	{
+		return d > right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator>(TYPE const& right_data) const noexcept
+	{
+		return d > right_data;
+	}
+
+	template<class TYPE>
+	bool operator>(TYPE const& left_data, node<TYPE> const& right_node) noexcept
+	{
+		return left_data > right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator>=(node<TYPE> const& right_node) const noexcept
+	{
+		return d >= right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator>=(TYPE const& right_data) const noexcept
+	{
+		return d >= right_data;
+	}
+
+	template<class TYPE>
+	bool operator>=(TYPE const& left_data, node<TYPE> const& right_node) noexcept
+	{
+		return left_data >= right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator<(node<TYPE> const& right_node) const noexcept
+	{
+		return d < right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator<(TYPE const& right_data) const noexcept
+	{
+		return d < right_data;
+	}
+
+	template<class TYPE>
+	bool operator<(TYPE const& left_data, node<TYPE> const& right_node) noexcept
+	{
+		return left_data < right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator<=(node<TYPE> const& right_node) const noexcept
+	{
+		return d <= right_node.d;
+	}
+
+	template<class TYPE>
+	bool node<TYPE>::operator<=(TYPE const& right_data) const noexcept
+	{
+		return d <= right_data;
+	}
+
+	template<class TYPE>
+	bool operator<=(TYPE const& left_data, node<TYPE> const& right_node) noexcept
+	{
+		return left_data <= right_node.d;
+	}
 
 
 
@@ -103,23 +264,52 @@ namespace x
 
 
 
-	// snode 节点 只有一个指针
-	template<class T>
-	class snode
+	// ********** node_single **********
+	// 节点。只有一个指针
+	template<class TYPE>
+	class node_single
 	{
 	private:
-		T d;
-		snode<T>* rn;
+		TYPE d;
+		node_single<TYPE>* nn;
+
 	public:
-		snode();
-		snode(const T& data, const snode* const next_snode = 0x00);
-		~snode();
+		// ---------- 构造、析构函数 ----------
+		node_single() noexcept;
+		node_single(TYPE const& data, node_single<TYPE>* const next_node_single = 0x00) noexcept;
+		~node_single() noexcept;
 
-		snode* get_next() const;
-		T get_data() const;
+		// ----------功能函数----------
+		node_single<TYPE>* get_next() const noexcept;
+		TYPE get_data() const noexcept;
+		void set_data(TYPE const& data) noexcept;
+		void set_next(node_single<TYPE>* const next_node_single) noexcept;
+		bool is_equal(node_single<TYPE> const& other_node_single) const noexcept;  // 对数据和指针都进行判断
+		void copy(node_single<TYPE> const& other_node_single) noexcept;  // 完全赋值，包括数据和指针
 
-		void set_data(const T& data);
-		void set_nextsnode(const snode* const next_snode);
+		// ---------- 重载运算符 ----------
+		node_single<TYPE>& operator=(node_single<TYPE> const& right_node_single) noexcept;  // 只对数据进行赋值，不赋值指针
+		node_single<TYPE>& operator=(TYPE const& right_data) noexcept;  //  对数据进行赋值
+		bool operator==(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
+		bool operator==(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator==(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		bool operator!=(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
+		bool operator!=(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator!=(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		bool operator>(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
+		bool operator>(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator>(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		bool operator>=(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
+		bool operator>=(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator>=(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		bool operator<(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
+		bool operator<(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator<(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		bool operator<=(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
+		bool operator<=(TYPE const& right_data) const noexcept;
+		template<class TYPE> friend bool operator<=(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+
+
 	};
 
 
@@ -131,50 +321,46 @@ namespace x
 
 
 
-	// ---------- 开始 snode 实现 ---------- //
+	// ********** node_single **********
 
-	template<class T>
-	snode<T>::snode()
+	// ---------- 构造、析构函数 ----------
+	template<class TYPE>
+	node_single<TYPE>::node_single() noexcept :nn(0x00)
+	{}
+
+	template<class TYPE>
+	node_single<TYPE>::node_single(TYPE const& data, node_single* const node_single) noexcept :d(data), nn(node_single)
+	{}
+
+	template<class TYPE>
+	node_single<TYPE>::~node_single() noexcept
 	{
-		rn = 0x00;
+		nn = 0x00;
 	}
 
-	template<class T>
-	snode<T>::snode(const T& data, const snode* const next_snode)
+
+	// ----------功能函数----------
+	template<class TYPE>
+	node_single<TYPE>* node_single<TYPE>::get_next() const noexcept
 	{
-		d = data;
-		rn = next_snode;
+		return nn;
 	}
 
-	template<class T>
-	snode<T>::~snode()
-	{
-		rn = 0x00;
-	}
-
-	template<class T>
-	snode<T>* snode<T>::get_next() const
-	{
-		return rn;
-	}
-
-	template<class T>
-	T snode<T>::get_data() const
+	template<class TYPE>
+	TYPE node_single<TYPE>::get_data() const noexcept
 	{
 		return d;
 	}
 
-	template<class T>
-	void snode<T>::set_data(const T& data)
+	template<class TYPE>
+	void node_single<TYPE>::set_data(TYPE const& data) noexcept
 	{
 		d = data;
 	}
 
-	template<class T>
-	void snode<T>::set_nextsnode(const snode* const next_snode)
+	template<class TYPE>
+	void node_single<TYPE>::set_next(node_single* const next_node_single) noexcept
 	{
-		rn = next_snode;
+		nn = next_node_single;
 	}
-
-	// ---------- 结束 snode 实现 ---------- //
 }
