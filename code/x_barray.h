@@ -171,7 +171,8 @@ namespace x
 
 
 
-	// barry_long 二进制数组，unsigned char数组。长度最长为9223372036854775807(2^63-1 or 0x7FFFFFFFFFFFFFFF)
+	// ********** barry_long **********
+	// 二进制数组，unsigned char数组。长度最长为9223372036854775807(2^63-1 or 0x7FFFFFFFFFFFFFFF)
 	class barray_long
 	{
 	private:
