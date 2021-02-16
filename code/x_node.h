@@ -292,24 +292,22 @@ namespace x
 		node_single<TYPE>& operator=(TYPE const& right_data) noexcept;  //  对数据进行赋值
 		bool operator==(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
 		bool operator==(TYPE const& right_data) const noexcept;
-		template<class TYPE> friend bool operator==(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		template<class TYPE> friend bool operator==(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept;
 		bool operator!=(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
 		bool operator!=(TYPE const& right_data) const noexcept;
-		template<class TYPE> friend bool operator!=(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		template<class TYPE> friend bool operator!=(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept;
 		bool operator>(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
 		bool operator>(TYPE const& right_data) const noexcept;
-		template<class TYPE> friend bool operator>(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		template<class TYPE> friend bool operator>(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept;
 		bool operator>=(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
 		bool operator>=(TYPE const& right_data) const noexcept;
-		template<class TYPE> friend bool operator>=(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		template<class TYPE> friend bool operator>=(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept;
 		bool operator<(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
 		bool operator<(TYPE const& right_data) const noexcept;
-		template<class TYPE> friend bool operator<(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
+		template<class TYPE> friend bool operator<(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept;
 		bool operator<=(node_single<TYPE> const& right_node_single) const noexcept;  // 只对数据进行判断
 		bool operator<=(TYPE const& right_data) const noexcept;
-		template<class TYPE> friend bool operator<=(TYPE const& left_data, node<TYPE> const& right_node_single) noexcept;
-
-
+		template<class TYPE> friend bool operator<=(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept;
 	};
 
 
@@ -363,4 +361,144 @@ namespace x
 	{
 		nn = next_node_single;
 	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::is_equal(node_single<TYPE> const& other_node_single) const noexcept
+	{
+		if (d != other_node_single.d || nn != other_node_single.nn)
+			return false;
+		return true;
+	}
+
+	template<class TYPE>
+	void node_single<TYPE>::copy(node_single<TYPE> const& other_node_single) noexcept
+	{
+		d = other_node_single.d;
+		nn = other_node_single.nn;
+	}
+
+	// ---------- 重载运算符 ----------
+	template<class TYPE>
+	node_single<TYPE>& node_single<TYPE>::operator=(node_single<TYPE> const& right_node_single) noexcept
+	{
+		d = right_node_single.d;
+		return *this;
+	}
+
+	template<class TYPE>
+	node_single<TYPE>& node_single<TYPE>::operator=(TYPE const& right_data) noexcept
+	{
+		d = right_data;
+		return *this;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator==(node_single<TYPE> const& right_node_single) const noexcept
+	{
+		return d == right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator==(TYPE const& right_data) const noexcept
+	{
+		return d == right_data;
+	}
+
+	template<class TYPE>
+	bool operator==(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept
+	{
+		return left_data == right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator!=(node_single<TYPE> const& right_node_single) const noexcept
+	{
+		return d != right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator!=(TYPE const& right_data) const noexcept
+	{
+		return d != right_data;
+	}
+
+	template<class TYPE>
+	bool operator!=(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept
+	{
+		return left_data != right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator>(node_single<TYPE> const& right_node_single) const noexcept
+	{
+		return d > right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator>(TYPE const& right_data) const noexcept
+	{
+		return d > right_data;
+	}
+
+	template<class TYPE>
+	bool operator>(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept
+	{
+		return left_data > right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator>=(node_single<TYPE> const& right_node_single) const noexcept
+	{
+		return d >= right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator>=(TYPE const& right_data) const noexcept
+	{
+		return d >= right_data;
+	}
+
+	template<class TYPE>
+	bool operator>=(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept
+	{
+		return left_data >= right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator<(node_single<TYPE> const& right_node_single) const noexcept
+	{
+		return d < right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator<(TYPE const& right_data) const noexcept
+	{
+		return d < right_data;
+	}
+
+	template<class TYPE>
+	bool operator<(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept
+	{
+		return left_data < right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator<=(node_single<TYPE> const& right_node_single) const noexcept
+	{
+		return d <= right_node_single.d;
+	}
+
+	template<class TYPE>
+	bool node_single<TYPE>::operator<=(TYPE const& right_data) const noexcept
+	{
+		return d <= right_data;
+	}
+
+	template<class TYPE>
+	bool operator<=(TYPE const& left_data, node_single<TYPE> const& right_node_single) noexcept
+	{
+		return left_data <= right_node_single.d;
+	}
 }
+
+
