@@ -1,5 +1,8 @@
 ﻿#pragma once
 
+#ifndef X_NODE_H
+#define x_NODE_H
+
 namespace x
 {
 	// ********** node **********
@@ -501,4 +504,4 @@ namespace x
 	}
 }
 
-
+#endif

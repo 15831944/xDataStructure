@@ -1,4 +1,8 @@
 ﻿#pragma once
+
+#ifndef X_BARRAY_H
+#define X_BARRAY_H
+
 #include "x_exception.h"
 #include <string>
 
@@ -337,3 +341,5 @@ namespace x
 		barray_long& operator>>=(long long const& offset);
 	};
 }
+
+#endif
