@@ -3,8 +3,8 @@
 #ifndef X_BARRAY_H
 #define X_BARRAY_H
 
-#include "x_exception.h"
 #include <string>
+#include "x_exception.h"
 
 namespace x
 {
